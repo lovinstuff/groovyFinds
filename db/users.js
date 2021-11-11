@@ -1,78 +1,210 @@
-const client = require("./client");
-const bcrypt = require("bcrypt");
+const client = require('./client.js');
+const { hash, comparePasswords } = require('../utils');
 
-async function createUser({ username, password }) {
-  const SALT_COUNT = 10;
+// CREATING THE USER
+const createUser = async ({ username, password, email, isAdmin }) => {
+  const hashedPassword = hash(password);
 
-  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+  // isAdmin must be explicitly set to true
+  if (isAdmin !== 'true') {
+    isAdmin = false;
+  }
+
   try {
     const {
       rows: [user],
     } = await client.query(
       `
-            INSERT INTO users (username, password)
-            VALUES ($1, $2)
-            RETURNING *;
-                `,
-      [username, hashedPassword]
+        INSERT INTO users(username, password, email, isadmin)
+        VALUES($1, $2, $3, $4)
+        ON CONFLICT (username) DO NOTHING
+        RETURNING id, username, email, isadmin;
+      `,
+      [username, hashedPassword, email, isAdmin]
     );
-    delete user.password;
+
     return user;
   } catch (error) {
-    console.error(error);
     throw error;
   }
-}
+};
 
-async function getUserById(id) {
-  try {
-    const {
-      rows: [user],
-    } = await client.query(`
-          SELECT * FROM users WHERE id=${id};
-      `);
-    return user;
-  } catch (err) {
-    throw err;
+// UPDATING USER
+const updateUser = async (userId, fields = {}) => {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(', ');
+
+  if (setString.length === 0) {
+    return;
   }
-}
 
-async function getUserByUserName(username) {
   try {
     const {
       rows: [user],
     } = await client.query(
       `
-          SELECT * FROM users WHERE username=$1;
+        UPDATE users
+        SET ${setString}
+        WHERE id=${userId}
+        RETURNING *;
+      `,
+      Object.values(fields)
+    );
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// GETTING THE USER WITH EMAIL AND PASSWORD - log in.
+const getUserByEmailAndPassword = async ({ email, password }) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        SELECT *
+        FROM users
+        WHERE email=$1
+        LIMIT 1;
+      `,
+      [email]
+    );
+    if (!user) {
+      return false;
+    }
+
+    const passwordMatch = comparePasswords(password, user.password);
+
+    if (!passwordMatch) {
+      return false;
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      isAdmin: user.isadmin,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+// GETTING THE USER BY ID
+// do NOT return the password
+const getUserById = async (id) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        SELECT id, username, email, isadmin
+        FROM users
+        WHERE id=$1;
+      `,
+      [id]
+    );
+
+    if (!user) {
+      return false;
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// select a user using the user's email. Return the user object.
+const getUserByEmail = async (email) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        SELECT id, username, email, isadmin
+        FROM users
+        WHERE email=$1;
+      `,
+      [email]
+    );
+
+    if (!user) {
+      return false;
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUserByUsername = async (username) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        SELECT id, username, email, isadmin
+        FROM users
+        WHERE username=$1;
       `,
       [username]
     );
-    return user;
-  } catch (err) {
-    throw err;
-  }
-}
 
-async function getUser({ username, password }) {
-  try {
-    const user = await getUserByUserName(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-    if (passwordsMatch) {
-      delete user.password;
-      return user;
-    } else {
-      return null;
-      // not sure about this one, if I try to throw an Error, it does not pass the test.
+    if (!user) {
+      return false;
     }
-  } catch (err) {
-    throw err;
+
+    return user;
+  } catch (error) {
+    throw error;
   }
-}
+};
+
+const getAllUsers = async () => {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT id, username, email, isadmin
+        FROM users;
+      `
+    );
+
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteUser = async (id) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        DELETE FROM users
+        WHERE id=$1;
+      `,
+      [id]
+    );
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   createUser,
+  getUserByEmailAndPassword,
   getUserById,
-  getUserByUserName,
-  getUser
+  updateUser,
+  getUserByEmail,
+  getUserByUsername,
+  getAllUsers,
+  deleteUser,
 };
