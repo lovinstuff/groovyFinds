@@ -1,17 +1,18 @@
 // code to build and initialize DB goes here
 const {
-  client, 
   // other db methods 
   createUser, 
   createAlbum
 } = require('./index');
+
+const client = require("./client");
 
 async function buildTables() {
   try {
     client.connect();
     // drop tables in correct order
     await client.query(`
-      DROP TABLE IF EXISTS vinyls;
+      DROP TABLE IF EXISTS albums;
       DROP TABLE IF EXISTS users;
     `);
 
@@ -73,7 +74,7 @@ async function populateInitialData() {
     console.log(albums)
     console.log('Finished creating albums!')
   } catch (error) {
-    console.log("There was an error creating users!")
+    console.log("There was an error creating the tables!")
     throw error;
   }
 }
