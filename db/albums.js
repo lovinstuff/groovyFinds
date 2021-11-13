@@ -1,5 +1,17 @@
 const client = require("./index");
 
+async function getAllAlbums() {
+  try {
+    const {rows: albums} = await client.query(`
+      SELECT * FROM albums;
+    `)
+
+    return albums;
+  } catch(err) {
+    throw err;
+  }
+}
+
 async function createAlbum({ name, artist, image_url, price }) {
   try {
     const {
@@ -48,6 +60,7 @@ async function getAlbumByName(name) {
 
 module.exports = {
   createAlbum, 
+  getAllAlbums, 
   getAlbumById, 
   getAlbumByName
 };
