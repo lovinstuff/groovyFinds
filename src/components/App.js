@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
 import {
+  Route, 
+  Switch, 
+  Redirect
+} from "react-router-dom";
+
+import {
   getSomething
 } from '../api';
 
-const App = () => {
-  const [message, setMessage] = useState('');
+import Login from './Login'
+import Register from './Register'
+import Cart from './Cart'
+import NavBar from './NavBar'
 
-  useEffect(() => {
-    getSomething()
-      .then(response => {
-        setMessage(response.message);
-      })
-      .catch(error => {
-        setMessage(error.message);
-      });
-  });
+const App = () => {
 
   return (
     <div className="App">
-      <h1>Hello, World!</h1>
-      <h2>{ message }</h2>
+      <h1>Find your Groovy finds here!</h1>
+      <NavBar />
+      <Switch>
+        <Route path='/'></Route>
+      </Switch>
+
     </div>
   );
 }
