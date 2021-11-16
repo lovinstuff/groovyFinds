@@ -22,7 +22,7 @@ async function createAlbum({ name, artist, image_url, price }) {
             VALUES ($1, $2, $3, $4)
             RETURNING *;
         `,
-      { name, artist, image_url, price }
+      [ name, artist, image_url, price ]
     );
 
     return album;
