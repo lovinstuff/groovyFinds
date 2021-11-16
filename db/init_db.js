@@ -12,7 +12,9 @@ async function buildTables() {
     client.connect();
     // drop tables in correct order
     await client.query(`
-      DROP TABLE IF EXISTS vinyls;
+      DROP TABLE IF EXISTS cart_item;
+      DROP TABLE IF EXISTS shopping_session;
+      DROP TABLE IF EXISTS albums;
       DROP TABLE IF EXISTS users;
     `);
 
@@ -21,7 +23,9 @@ async function buildTables() {
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username varchar(255) UNIQUE NOT NULL,
-        password varchar(255) NOT NULL
+        password varchar(255) NOT NULL,
+        email varchar(255) UNIQUE NOT NULL,
+        isadmin BOOLEAN DEFAULT false
       );
 
       CREATE TABLE albums(
@@ -57,9 +61,9 @@ async function populateInitialData() {
     // create useful starting data
     console.log("creating users: ");
     const usersToCreate = [
-      { username: "albert", password: "bertie99" },
-      { username: "sandra", password: "sandra123" },
-      { username: "glamgal", password: "glamgal123" },
+      { username: "albert", password: "bertie99", email: "albert@123.com" },
+      { username: "sandra", password: "sandra123", email: "sandra@123.com"},
+      { username: "glamgal", password: "glamgal123", email: "glamgal@123.com"},
     ];
 
     const users = await Promise.all(usersToCreate.map(createUser));
