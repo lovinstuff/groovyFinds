@@ -2,11 +2,9 @@
 const client = require('./client.js');
 const { hash, comparePasswords } = require('../utils');
 
-// CREATING THE USER
 const createUser = async ({ username, password, email, isAdmin }) => {
   const hashedPassword = hash(password);
 
-  // isAdmin must be explicitly set to true
   if (isAdmin !== 'true') {
     isAdmin = false;
   }
@@ -30,7 +28,6 @@ const createUser = async ({ username, password, email, isAdmin }) => {
   }
 };
 
-// UPDATING USER
 const updateUser = async (userId, fields = {}) => {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -59,7 +56,6 @@ const updateUser = async (userId, fields = {}) => {
   }
 };
 
-// GETTING THE USER WITH EMAIL AND PASSWORD - log in.
 const getUserByEmailAndPassword = async ({ email, password }) => {
   try {
     const {
@@ -94,8 +90,6 @@ const getUserByEmailAndPassword = async ({ email, password }) => {
   }
 };
 
-// GETTING THE USER BY ID
-// do NOT return the password
 const getUserById = async (id) => {
   try {
     const {
@@ -119,7 +113,6 @@ const getUserById = async (id) => {
   }
 };
 
-// select a user using the user's email. Return the user object.
 const getUserByEmail = async (email) => {
   try {
     const {
