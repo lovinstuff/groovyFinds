@@ -25,7 +25,7 @@ usersRouter.get('/', async (req, res) => {
     }
   }
 
-  res.send(':P');
+  res.send('');// finish
 });
 
 usersRouter.get('/whoAmI', (req, res) => {
@@ -108,7 +108,7 @@ usersRouter.post('/register', async (req, res, next) => {
     }
 
     const user = await createUser({ username, password, email });
-
+// check if user was created
     const token = createJWT(user.email, user.id, user.username);
 
     res.send({
@@ -197,7 +197,7 @@ usersRouter.delete('/:id', async (req, res) => {
   const user = verifyJWT(req.headers.authorization);
 
   if (!user.isAdmin) {
-    return res.send(':P');
+    return res.send('');// update
   }
 
   const { id } = req.params;
