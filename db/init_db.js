@@ -3,6 +3,9 @@
 const client = require('./client');
 const {
   // other db methods
+  createProduct,
+  getAllProducts,
+  getProductByType,
   createUser,
   createAlbum,
 } = require("./index");
