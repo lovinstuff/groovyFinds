@@ -1,6 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {albumsRouter} from "../routes";
 
-const FilterButton = () => {
+  const [createAlbum, getAllAlbums] = useState([]);
+  const [getAlbumsById, getAlbumsByName] = useState("");
+  async function getFunctions() {
+    try {
+      const Albums = await fetchAllAlbums();
+      setAlbumsList(albums.reverse());
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  useEffect(() => {
+    getFunctions();
+  });
+
+  const DeleteButton = ({ userPosts, setUserPosts, highlightedPost }) => {
+    const handleClick = () => {
+        history.push('/profile/userposts');
+    };
+
+    return (
+        <>
+            <button
+                className="delete-post-button"
+                onClick={async () => {
+                    try {
+                        const userToken = getToken();
+                        const post_ID = userPostId;
+                        const emptyPostObj = await deletePost(userToken, post_ID);
+                        const filteredPosts = userPosts.filter(post => {
+                            if (post._id !== deletePostId) {
+                                return post
+                            }
+                        });
+                        setUserPosts(filteredPosts);
+                        handleClick();
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }}>
+                <span className="material-icons">delete</span>  Delete Post
+    </button>
+        </>
+    )
+}
+
+export default DeleteButton;
+
+
+const FilterButton = ({createAlbum, getAllAlbums, getAlbumsById, getAlbumsByName}) => {
+
+  const { getAlbumsById } = useParams();
+  const handleClick = () => {
+    albums.push('albums');
+};
 
 return (<div>
 
