@@ -34,7 +34,9 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
+const adminRouter = require('./Admin');
 const usersRouter = require('./user');
 apiRouter.use("/users", usersRouter);
+apiRouter.use ("/admin", adminRouter);
 
 module.exports = apiRouter;
