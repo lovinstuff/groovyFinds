@@ -1,0 +1,87 @@
+.productCards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .product {
+    background-color: rgb(255, 255, 255);
+    width: 45%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+  
+  .productImg {
+    object-fit: scale-down;
+    height: 300px;
+    width: 300px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .name {
+    color: #212121;
+  }
+  
+  .description {
+    color: #4a4a4a;
+    font-size: 20px;
+    margin: 50px 0;
+  }
+  
+  .price {
+    font-size: 26px;
+  }
+  
+  .addToCart {
+    margin-top: 10px;
+    max-height: 50px;
+    max-width: 50px;
+  }
+  
+  .addToCart:hover {
+    background-color: rgb(219, 219, 219);
+    transform: scale(1.2);
+  }
+  
+  .Title {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .StockStatus {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .productImg {
+      object-fit: scale-down;
+      height: 150px;
+      width: 150px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+  
+    .description {
+      color: #4a4a4a;
+      font-size: 15px;
+      margin: 50px 0;
+    }
+  
+    .Title {
+      text-align: center;
+      padding: 20px;
+    }
+  
+    .name {
+      color: #212121;
+      font-size: 25px;
+    }
+  }
