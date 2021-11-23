@@ -37,4 +37,7 @@ apiRouter.use(async (req, res, next) => {
 const usersRouter = require('./user');
 apiRouter.use("/users", usersRouter);
 
+const cartRouter = require('./cart');
+apiRouter.use('/cart', cartRouter);
+
 module.exports = apiRouter;

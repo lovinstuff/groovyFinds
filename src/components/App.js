@@ -22,7 +22,16 @@ const App = () => {
       <h1>Find your Groovy finds here!</h1>
       <NavBar />
       <Switch>
-        <Route path='/'></Route>
+        <Route path='/Login'>
+          <Login />
+        </Route>
+        <Route path='/Register'>
+          <Register />
+        </Route>
+        <Route path='/Cart'>
+          <Cart />
+        </Route>
+        {/* can create another route in here for your component */}
       </Switch>
 
     </div>
