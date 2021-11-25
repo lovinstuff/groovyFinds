@@ -50,7 +50,8 @@ async function buildTables() {
       CREATE TABLE cart_item(
         id SERIAL PRIMARY KEY, 
         session_id INTEGER REFERENCES shopping_session(id), 
-        album_id INTEGER REFERENCES albums(id),
+        album_id INTEGER REFERENCES albums(id), 
+        price integer, 
         quantity INTEGER NOT NULL, 
         created_at TIMESTAMP
       );
