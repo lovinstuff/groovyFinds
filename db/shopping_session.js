@@ -50,11 +50,13 @@ const updateShoppingSessionUser = async ({ id, user_id }) => {
 
 const updateShoppingSessionTotal = async (sessionId) => {
   // this function is to update the shopping_session total price
+  // basically just a refresh
   try {
     const {
       rows: [updatedSession],
     } = await client.query(`
-            
+            SELECT SUM(price) AS total_price
+            FROM 
         `);
   } catch (err) {
     throw err;
