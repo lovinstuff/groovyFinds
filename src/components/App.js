@@ -19,12 +19,17 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Find your Groovy finds here!</h1>
       <NavBar />
       <Switch>
-        <Route path='/'></Route>
+        <Route path='/Login'>
+          <Login />
+        </Route>
       </Switch>
-
+      <Switch>
+        <Route path='/'>
+        <h1>Find your Groovy finds here!</h1>
+        </Route>
+      </Switch>
     </div>
   );
 }
