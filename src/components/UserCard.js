@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { changeAdmin, removeUser } from "../../api";
+import { changeAdmin, removeUser } from "../../api";
 import { Redirect } from "react-router-dom";
 
 const UserCard = ({ user, index, grabbedUsers, setGrabbedUsers }) => {
