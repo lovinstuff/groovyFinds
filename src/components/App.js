@@ -19,12 +19,18 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Find your Groovy finds here!</h1>
       <NavBar />
       <Switch>
         <Route path='/Login'>
           <Login />
         </Route>
+<<<<<<< HEAD
+      </Switch>
+      <Switch>
+        <Route path='/'>
+        <h1>Find your Groovy finds here!</h1>
+        </Route>
+=======
         <Route path='/Register'>
           <Register />
         </Route>
@@ -32,8 +38,8 @@ const App = () => {
           <Cart />
         </Route>
         {/* can create another route in here for your component */}
+>>>>>>> 5030be7b653c35fc00d170a7d8a2a2f1b752828c
       </Switch>
-
     </div>
   );
 }

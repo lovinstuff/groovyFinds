@@ -1,0 +1,40 @@
+/* Website colors
+
+Green: #C9E004
+Red: #FF5057
+White: #FFFFD7
+Blue: #54BEDC	
+*/
+
+body {
+  background-color: #ffffd7;
+}
+
+body h1 {
+	color: #FF5057;
+	text-align: center;
+	margin-top: 15rem;
+}
+
+/* NavBar */
+
+.NavBar {
+  height: 2rem;
+  padding: 10px;
+  background-color: #54bedc;
+  text-align: center;
+  
+}
+
+.link {
+  margin: 0.5rem;
+  text-decoration: none;
+  color: #c9e004;
+  font-weight: 700;
+}
+
+.link:hover {
+  color: #ff5057;
+  border-bottom: solid 1px #ff5057;
+}
+
