@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AdminUsers from "./Admin_Page/Admin_Users";
 
 import {
   Route, 
@@ -22,6 +23,7 @@ const App = () => {
       <h1>Find your Groovy finds here!</h1>
       <NavBar />
       <Switch>
+        <Route path='/Admin'><AdminUsers /></Route>
         <Route path='/'></Route>
       </Switch>
 

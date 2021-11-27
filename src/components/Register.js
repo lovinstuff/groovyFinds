@@ -41,25 +41,25 @@ const Register = (props) => {
         onChange={(event) => setPassword(event.target.value)}
         placeholder=""
       />
-      <button
+      {/* <button
         onClick={async (event) => {
           event.preventDefault();
-          try {
-            let submit = await userRegister(name, email, username, password);
-            if (submit.name) {
-              alert(submit.message);
-            } else {
-              setLoggedIn(true);
-              alert(submit.message);
-              return <Redirect to="/" />;
-            }
-          } catch (error) {
-            console.error(error);
+          // try {
+          //   let submit = await userRegister(name, email, username, password);
+          //   if (submit.name) {
+          //     alert(submit.message);
+          //   } else {
+          //     setLoggedIn(true);
+          //     alert(submit.message);
+          //     return <Redirect to="/" />;
+          //   }
+          // } catch (error) {
+          //   console.error(error);
           }
-        }}
+        }
       >
         Register
-      </button>
+      </button>*/}
     </form>
   );
 };

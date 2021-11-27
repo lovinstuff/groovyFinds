@@ -28,18 +28,18 @@ const Login = (props) => {
           onClick={async (event) => {
             event.preventDefault();
             try {
-              let submit = await userLogin(username, password);
+            //   let submit = await userLogin(username, password);
   
-              if (submit.name) {
-                alert(submit.message);
-              } else {
-                if (submit.user.admin === true) {
-                  loggedAdmin();
-                }
-                setAdmin(submit.user.admin);
-                setLoggedIn(true);
-                setUser(username);
-              }
+            //   if (submit.name) {
+            //     alert(submit.message);
+            //   } else {
+            //     if (submit.user.admin === true) {
+            //       loggedAdmin();
+            //     }
+            //     setAdmin(submit.user.admin);
+              //   setLoggedIn(true);
+              //   setUser(username);
+              // }
             } catch (error) {
               console.error(error);
             }

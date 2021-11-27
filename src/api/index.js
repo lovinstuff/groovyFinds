@@ -29,6 +29,15 @@ export async function getProducts() {
   }
 }
 
+export async function getAllUsers() {
+  try {
+    const { data } = await axios.get("/api/users");
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function updateProductQuantity(product_id, quantity, token) {
   try {
     const { data } = await axios.patch(
