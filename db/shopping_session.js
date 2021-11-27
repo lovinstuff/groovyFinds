@@ -1,4 +1,5 @@
 const client = require("./client");
+const { getSessionId } = require('../auth')
 
 const createShoppingSession = async ({ user_id, total }) => {
   // this function should be called when there is no shopping session stored in the local storage, and a user adds an item to the cart
@@ -46,10 +47,9 @@ const updateShoppingSessionUser = async ({ id, user_id }) => {
   }
 };
 
-const updateShoppingSessionTotal = async () => {
-  // this function is to update the shopping_session total price
-  const sessionPrice = getCartTotalPrice();
 
+const updateShoppingSessionTotal = async (sessionId) => {
+  // this function is to update the shopping_session total price
   try {
     const {
       rows: [updatedSession],
@@ -65,4 +65,5 @@ module.exports = {
   createShoppingSession,
   updateShoppingSessionUser,
   updateShoppingSessionTotal,
+  
 };

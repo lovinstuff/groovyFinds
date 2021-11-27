@@ -2,6 +2,8 @@
 module.exports = {
   // db methods
   ...require('./users'), 
-  ...require('./albums')
+  ...require('./albums'), 
+  ...require('./cart_item'), 
+  ...require('./shopping_session')
 }
 

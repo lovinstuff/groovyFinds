@@ -7,10 +7,6 @@ import {
   Redirect
 } from "react-router-dom";
 
-import {
-  getSomething
-} from '../api';
-
 import Login from './Login'
 import Register from './Register'
 import Cart from './Cart'
@@ -20,13 +16,24 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Find your Groovy finds here!</h1>
       <NavBar />
       <Switch>
-        <Route path='/Admin'><AdminUsers /></Route>
-        <Route path='/'></Route>
-      </Switch>
 
+        <Route path='/Admin'><AdminUsers /></Route>
+        <Route path='/Login'>
+          <Login />
+        </Route> 
+        <Route path='/Register'>
+          <Register />
+        </Route>
+        <Route path='/Cart'>
+          <Cart />
+        </Route>
+        <Route path='/'>
+        <h1>Find your Groovy finds here!</h1>
+        </Route>
+        {/* can create another route in here for your component */}
+      </Switch>
     </div>
   );
 }
