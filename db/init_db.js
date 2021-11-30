@@ -73,6 +73,7 @@ async function populateInitialData() {
 
     const users = await Promise.all(usersToCreate.map(createUser));
 
+
     console.log("Users created:");
     console.log(users);
     console.log("Finished creating users!");
@@ -161,10 +162,10 @@ async function populateInitialData() {
       },
     ];
 
-    //const albums = await Promise.all(albumsToCreate.map(createAlbum));
+    const albums = await Promise.all(albumsToCreate.map(createAlbum));
 
     console.log("Albums created:");
-    //console.log(albums);
+    console.log(albums);
     console.log("Finished creating albums!");
   } catch (error) {
     console.log("There was an error creating users!");
