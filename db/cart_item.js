@@ -52,26 +52,11 @@ const deleteCartItem = async (id) => {
     }
 }
 
-const getTotalOfCurrentSession = async (sessionId) => {
-    try {
-        const { rows:[total] } = await client.query(`
-            SELECT SUM(price) AS total
-            FROM cart_item
-            WHERE session_id=$1;
-        `, [sessionId])
-
-        return total;
-    } catch (err) {
-        throw err;
-    }
-}
-
 
 
 module.exports = {
     addToCart, 
     getCurrentSessionCartItems, 
     changeItemQuantity, 
-    deleteCartItem, 
-    getTotalOfCurrentSession
+    deleteCartItem
 }

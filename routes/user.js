@@ -1,6 +1,6 @@
 const express = require('express');
 const usersRouter = express.Router();
-const { createJWT, verifyJWT } = require('../utils');
+const { createJWT, verify } = require('../utils');
 const {
   getAllUsers,
   createUser,
