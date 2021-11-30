@@ -14,6 +14,9 @@ import NavBar from './NavBar'
 
 const App = () => {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+
   return (
     <div className="App">
       <NavBar />
@@ -23,8 +26,15 @@ const App = () => {
         <Route path='/Login'>
           <Login />
         </Route> 
+          <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path='/'>
+        <h1>Find your Groovy finds here!</h1>
+        </Route>
         <Route path='/Register'>
-          <Register />
+          <Register setIsLoggedIn = {setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
           <Cart />

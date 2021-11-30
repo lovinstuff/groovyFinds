@@ -47,23 +47,7 @@ const updateShoppingSessionUser = async ({ id, user_id }) => {
   }
 };
 
-
-const updateShoppingSessionTotal = async (sessionId) => {
-  // this function is to update the shopping_session total price
-  try {
-    const {
-      rows: [updatedSession],
-    } = await client.query(`
-            
-        `);
-  } catch (err) {
-    throw err;
-  }
-};
-
 module.exports = {
   createShoppingSession,
-  updateShoppingSessionUser,
-  updateShoppingSessionTotal,
-  
+  updateShoppingSessionUser 
 };
