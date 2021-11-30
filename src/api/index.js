@@ -75,3 +75,42 @@ export async function updateProduct(product_id, fields, token) {
     console.error(error);
   }
 }
+
+// REGISTER A USER
+
+export async function registerUser(username, password) {
+  try {
+    const {data} = await axios
+      .post(`/api/users/register`, {
+        username,
+        password,
+      })
+      
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// LOGIN USER
+
+export async function loginUser(username, password) {
+  try {
+    const {data} = await axios
+      .post(`${BASE}/api/users/login`, {
+        username,
+        password,
+      })
+      console.log(data)
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// LOG OUT
+
+export async function logOut() {
+  const token = getToken();
+  return token ? localStorage.removeItem("token") : "";
+}
