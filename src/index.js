@@ -7,6 +7,9 @@ import {
 } from './components';
 
 ReactDOM.render(
+  <Router>
+
+  <App /></Router>,
 
   <BrowserRouter>
   <App />
