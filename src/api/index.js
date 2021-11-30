@@ -1,4 +1,5 @@
 import axios from 'axios';
+const BASE = `http://localhost:5000/`
 
 export const clearToken = () => {
   localStorage.removeItem("token");
@@ -22,7 +23,7 @@ export const clearAdmin = () => {
 
 export async function getProducts() {
   try {
-    const { data } = await axios.get("/api/products");
+    const { data } = await axios.get(`${BASE}/api/products`);
     return data;
   } catch (error) {
     throw error;
@@ -32,7 +33,7 @@ export async function getProducts() {
 export async function updateProductQuantity(product_id, quantity, token) {
   try {
     const { data } = await axios.patch(
-      `/api/cart/${product_id}`,
+      `${BASE}api/cart/${product_id}`,
       { quantity },
       {
         headers: {
@@ -48,7 +49,7 @@ export async function updateProductQuantity(product_id, quantity, token) {
 
 export async function createProduct(name, description, price, image_url, type) {
   try {
-    const { data } = await axios.post("/api/products", {
+    const { data } = await axios.post(`${BASE}/api/products`, {
       name,
       description,
       price,
@@ -65,7 +66,7 @@ export async function createProduct(name, description, price, image_url, type) {
 export async function updateProduct(product_id, fields, token) {
   try {
     const updatedProduct = await axios.patch(
-      `api/products/${product_id}`,
+      `${BASE}api/products/${product_id}`,
       fields,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -81,7 +82,7 @@ export async function updateProduct(product_id, fields, token) {
 export async function registerUser(username, password) {
   try {
     const {data} = await axios
-      .post(`/api/users/register`, {
+      .post(`${BASE}/api/users/register`, {
         username,
         password,
       })
@@ -97,7 +98,7 @@ export async function registerUser(username, password) {
 export async function loginUser(username, password) {
   try {
     const {data} = await axios
-      .post(`${BASE}/api/users/login`, {
+      .post(`${BASE}api/users/login`, {
         username,
         password,
       })
