@@ -25,6 +25,7 @@ export const clearAdmin = () => {
 export async function getProducts() {
   try {
     const { data } = await axios.get(`${BASE}api/products`);
+    console.log(data, 'inside get all products')
     return data;
   } catch (error) {
     throw error;
