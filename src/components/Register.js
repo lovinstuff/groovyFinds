@@ -151,4 +151,3 @@ export default function Register({setIsLoggedIn}) {
   //     );
 }
 
-export default Register;
