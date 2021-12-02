@@ -28,10 +28,9 @@ const App = () => {
         <Route path='/Login'>
           <Login />
         </Route> 
+        <Route>
           <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
         </Route>
-      </Switch>
-      <Switch>
         <Route path='/Register'>
           <Register setIsLoggedIn = {setIsLoggedIn} />
         </Route>
