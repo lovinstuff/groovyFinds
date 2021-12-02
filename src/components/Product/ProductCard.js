@@ -31,12 +31,12 @@ const ProductCard = ({ index, product, cart }) => {
       <h1 className="name">{name}</h1>
       <p className="description">Description: {description}</p>
       <h3 className="price">Price: ${price}</h3>
-      <p
-        
+      <button
+       
         onClick={() => {
           in_stock ? handleAddtoCart() : alert("Item out of stock!");
         }}
-      > Add to cart! </p>
+      > Add to cart! </button>
       {in_stock ? (
         <p className="StockStatus">In stock!</p>
       ) : (

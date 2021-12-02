@@ -191,7 +191,7 @@ async function populateInitialData() {
         inventory: 4,
       },
     ];
-    const productsToCreate = await Promise.all(productsToCreate.map(createProduct));
+    const products = await Promise.all(productsToCreate.map(createProduct));
 
     console.log("creating albums: ");
 
