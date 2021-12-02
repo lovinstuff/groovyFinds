@@ -3,7 +3,7 @@
 const client = require('./client');
 const {
   // other db methods
-  createProduct,
+  // createProduct,
   createUser,
   createAlbum,
 } = require("./index");
@@ -191,7 +191,7 @@ async function populateInitialData() {
         inventory: 4,
       },
     ];
-    const products = await Promise.all(productsToCreate.map(createProduct));
+    // const products = await Promise.all(productsToCreate.map(createProduct));
 
     console.log("creating albums: ");
 
