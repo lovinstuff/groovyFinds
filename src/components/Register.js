@@ -8,6 +8,61 @@ export default function Register({setIsLoggedIn}) {
     const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  return (
+    <form className="register" onSubmit={(event) => event.preventDefault()}>
+      <h1>Register:</h1>
+      <label>Name:</label>
+      <input
+        type="text"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        placeholder=""
+      />
+      <label>Email:</label>
+      <input
+        type="text"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder=""
+      />
+      <label>Username:</label>
+      <input
+        type="text"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        placeholder=""
+      />
+      <label>Password:</label>
+      <input
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        placeholder=""
+      />
+      {/* <button
+        onClick={async (event) => {
+          event.preventDefault();
+          // try {
+          //   let submit = await userRegister(name, email, username, password);
+          //   if (submit.name) {
+          //     alert(submit.message);
+          //   } else {
+          //     setLoggedIn(true);
+          //     alert(submit.message);
+          //     return <Redirect to="/" />;
+          //   }
+          // } catch (error) {
+          //   console.error(error);
+          }
+        }
+      >
+        Register
+      </button>*/}
+    </form>
+  );
+};
+
+export default Register;
   const history = useHistory();
     return (
         <form
