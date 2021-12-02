@@ -9,6 +9,7 @@ const Products = ({ cart, setCart }) => {
   const getAllProducts = async () => {
     try {
       const products = await getProducts();
+
       setGrabbedProducts(products);
     } catch (error) {
       console.error(error);

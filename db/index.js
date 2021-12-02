@@ -4,6 +4,7 @@ module.exports = {
   ...require('./users'), 
   ...require('./albums'), 
   ...require('./cart_item'), 
-  ...require('./shopping_session')
+  ...require('./shopping_session'),
+  ...require('./products')
 }
 
