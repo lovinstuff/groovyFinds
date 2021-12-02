@@ -1,13 +1,13 @@
 import React from "react";
-import { addItemToCart } from "../../api";
-import { AddtoCart } from "../../Img";
+//import { addItemToCart } from "../../api";
+
 
 const ProductCard = ({ index, product, cart }) => {
   const { name, description, price, image_url, in_stock } = product;
   const token = localStorage.getItem("token");
   const handleAddtoCart = async () => {
     if (token) {
-      await addItemToCart(product.id, 1, token);
+     // await addItemToCart(product.id, 1, token);
     }
     const existingProductInCart = cart.find((element) => element.name === name);
     if (existingProductInCart) {
@@ -31,14 +31,12 @@ const ProductCard = ({ index, product, cart }) => {
       <h1 className="name">{name}</h1>
       <p className="description">Description: {description}</p>
       <h3 className="price">Price: ${price}</h3>
-      <img
-        className="addToCart"
-        src={AddtoCart}
-        alt="Add to cart"
+      <button
+       
         onClick={() => {
           in_stock ? handleAddtoCart() : alert("Item out of stock!");
         }}
-      />
+      > Add to cart! </button>
       {in_stock ? (
         <p className="StockStatus">In stock!</p>
       ) : (

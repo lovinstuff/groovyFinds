@@ -7,9 +7,9 @@ const {
     deleteCartItem
 } = require('../db')
 
-const {
-    getSessionId
-} = require('../auth');
+//const {
+   // getSessionId
+//} = require('../auth');
 
 cartRouter.get('/', async (req, res, next) => {
     try {

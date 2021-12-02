@@ -1,3 +1,6 @@
+const client = require("./client");
+
+
 async function createProduct({
     name,
     description,
@@ -38,6 +41,7 @@ async function createProduct({
     try {
       const { rows } = await client.query(`
       SELECT * FROM products;`);
+      console.log(rows, 'inside db')
       return rows;
     } catch (err) {
       console.error("Could not get all products in db/index.js @ getAllProducts");
@@ -68,16 +72,6 @@ async function createProduct({
         "Could not grab product by id in db/index.js @ getProductById()"
       );
       throw error;
-    }
-  }
-  
-  async function getAllProducts() {
-    try {
-      const { rows } = await client.query(`
-      SELECT * FROM products;`);
-      return rows;
-    } catch (err) {
-      console.error("Could not get all products in db/index.js @ getAllProducts");
     }
   }
   
@@ -142,3 +136,12 @@ async function createProduct({
       );
     }
   }
+
+  module.exports = {
+    createProduct, 
+    getAllProducts, 
+    getProductById, 
+    patchProduct,
+    getProductByName,
+    getProductByType
+  };
