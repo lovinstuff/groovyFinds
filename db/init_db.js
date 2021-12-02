@@ -7,7 +7,7 @@ const {
   createUser,
   createAlbum,
 } = require("./index");
-
+console.log()
 async function buildTables() {
   try {
     client.connect();
