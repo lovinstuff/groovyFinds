@@ -1,5 +1,5 @@
 const client = require("./client");
-const { getSessionId } = require('../auth')
+//const { getSessionId } = require('../auth')
 
 const createShoppingSession = async ({ user_id, total }) => {
   // this function should be called when there is no shopping session stored in the local storage, and a user adds an item to the cart

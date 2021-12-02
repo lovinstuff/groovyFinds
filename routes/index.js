@@ -39,6 +39,9 @@ const usersRouter = require('./user');
 apiRouter.use("/users", usersRouter);
 apiRouter.use ("/admin", adminRouter);
 
+const productsRouter = require('./products')
+apiRouter.use("/products", productsRouter)
+
 const cartRouter = require('./cart');
 apiRouter.use('/cart', cartRouter);
 

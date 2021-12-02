@@ -1,6 +1,8 @@
 import axios from 'axios';
 const BASE = `http://localhost:5000/`
 
+const BASE = "http://localhost:5000/"
+
 export const clearToken = () => {
   localStorage.removeItem("token");
 };
@@ -23,7 +25,16 @@ export const clearAdmin = () => {
 
 export async function getProducts() {
   try {
-    const { data } = await axios.get(`${BASE}/api/products`);
+    const { data } = await axios.get(`${BASE}api/products`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllUsers() {
+  try {
+    const { data } = await axios.get("/api/users");
     return data;
   } catch (error) {
     throw error;
@@ -49,7 +60,7 @@ export async function updateProductQuantity(product_id, quantity, token) {
 
 export async function createProduct(name, description, price, image_url, type) {
   try {
-    const { data } = await axios.post(`${BASE}/api/products`, {
+    const { data } = await axios.post(`${BASE}api/products`, {
       name,
       description,
       price,
@@ -82,7 +93,7 @@ export async function updateProduct(product_id, fields, token) {
 export async function registerUser(username, password) {
   try {
     const {data} = await axios
-      .post(`${BASE}/api/users/register`, {
+      .post(`${BASE}api/users/register`, {
         username,
         password,
       })

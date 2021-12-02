@@ -1,5 +1,5 @@
 const client = require("./client");
-const { getSessionId } = require('../auth')
+//const { getSessionId } = require('../auth')
 
 const addToCart = async (sessionId, albumId, price, quantity = 1) => {
     try {
