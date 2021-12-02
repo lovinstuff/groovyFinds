@@ -7,6 +7,7 @@ import { storeToken} from "../auth";
 export default function Register({setIsLoggedIn}) {
     const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <form className="register" onSubmit={(event) => event.preventDefault()}>
@@ -14,8 +15,8 @@ export default function Register({setIsLoggedIn}) {
       <label>Name:</label>
       <input
         type="text"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
+        value={userName}
+        onChange={(event) => setUserName(event.target.value)}
         placeholder=""
       />
       <label>Email:</label>
@@ -28,8 +29,8 @@ export default function Register({setIsLoggedIn}) {
       <label>Username:</label>
       <input
         type="text"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
+        value={userName}
+        onChange={(event) => setUserName(event.target.value)}
         placeholder=""
       />
       <label>Password:</label>
