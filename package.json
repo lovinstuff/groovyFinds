@@ -2,6 +2,9 @@
   "name": "starting_code",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "14.17.4"
+  },
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run client:build",
