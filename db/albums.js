@@ -12,17 +12,17 @@ async function getAllAlbums() {
   }
 }
 
-async function createAlbum({ name, artist, image_url, price }) {
+async function createAlbum({ name, artist, genre, image_url, price }) {
   try {
     const {
       rows: [album],
     } = await client.query(
       `
-            INSERT INTO albums (name, artist, image_url, price)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO albums (name, artist, genre, image_url, price)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *;
         `,
-      [ name, artist, image_url, price ]
+      [ name, artist, genre, image_url, price ]
     );
 
     return album;

@@ -53,10 +53,13 @@ cartRouter.delete('/:cartItemID', async (req, res, next) => {
 
     try {
         await deleteCartItem(cartItemID);
+        res.send({message:"Successfully deleted cart item"})
     } catch(err) {
         next(err)
     }
 })
+
+
 
 
 module.exports = cartRouter;

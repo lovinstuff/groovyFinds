@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getAllUsers } from "../api/users";
+import { getAllUsers } from "../../api";
+import axios from 'axios';
 
-export default function Admin() {
+
+
+export default function AdminUsers() {
   const [users, setUsers] = useState([]);
 
   const fetchAllUsers = async () => {
