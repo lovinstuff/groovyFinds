@@ -24,7 +24,7 @@ const App = () => {
       <NavBar />
       <Switch>
         <Route path='/Admin'><AdminUsers /></Route>
-        <Route>
+        <Route path='/Login'>
           <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
         </Route>
         <Route path='/Register'>
