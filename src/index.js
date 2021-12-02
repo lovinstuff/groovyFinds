@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 import {
   App
@@ -8,12 +8,7 @@ import {
 
 ReactDOM.render(
   <Router>
-
-  <App /></Router>,
-
-  <BrowserRouter>
-  <App />
-  </BrowserRouter>,
+    <App />
+  </Router>,
   document.getElementById('root')
-  
 );
