@@ -33,7 +33,7 @@ export async function getProducts() {
 
 export async function getAllUsers() {
   try {
-    const { data } = await axios.get("/api/users");
+    const { data } = await axios.get("/api/Admin");
     return data;
   } catch (error) {
     throw error;
