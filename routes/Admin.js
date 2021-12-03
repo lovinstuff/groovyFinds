@@ -8,18 +8,21 @@ function AdminCheck (req, res, next) {
     next({name:"Login Error" , message: "You logged in to this route" })
     
         }
-  if (!req.user.admin){
+  else if (!req.user.isAdmin){
           res.status(403)
           next({name:"Admin Error" , message: "Permission Denied!" })
           
               }
-    
+  else {
+
     next()
+
+  }
         
 }
 
 
-adminRouter.get("/", async (req, res, next) => {
+adminRouter.get("/", AdminCheck, async (req, res, next) => {
     try {
       const allUsers = await getAllUsers();
   
