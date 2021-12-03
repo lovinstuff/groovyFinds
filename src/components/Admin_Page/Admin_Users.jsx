@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getAllUsers } from "../../api";
-import axios from 'axios';
 
 
 
