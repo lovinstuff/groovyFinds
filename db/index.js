@@ -5,6 +5,6 @@ module.exports = {
   ...require('./albums'), 
   ...require('./cart_item'), 
   ...require('./shopping_session'),
-  ...require('./products')
+  // ...require('./products')
 }
 
