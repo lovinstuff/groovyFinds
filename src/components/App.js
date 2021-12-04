@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import AdminUsers from "./Admin_Page/Admin_Users";
 
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import {
-  Route, 
-  Switch, 
-  Redirect
-} from "react-router-dom";
-
-import Login from './Login'
-import Register from './Register'
-import Cart from './Cart'
-import NavBar from './NavBar'
-import Products from './Product/Products'
+import Login from "./Login";
+import Register from "./Register";
+import Cart from "./Cart";
+import NavBar from "./NavBar";
+import Products from "./Product/Products";
 
 const App = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
@@ -23,21 +17,24 @@ const App = () => {
     <div className="App">
       <NavBar />
       <Switch>
-
-        <Route path='/Admin'><AdminUsers /></Route>
-        <Route path='/Login'>
-          <Login />
-        </Route> 
-        <Route>
-          <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
+        <Route path="/Admin">
+          <AdminUsers />
         </Route>
-        <Route path='/Register'>
-          <Register setIsLoggedIn = {setIsLoggedIn} />
+        <Route path="/Login">
+          <Login
+            userName={userName}
+            setUserName={setUserName}
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+          />
         </Route>
-        <Route path='/Cart'>
+        <Route path="/Register">
+          <Register setIsLoggedIn={setIsLoggedIn} />
+        </Route>
+        <Route path="/Cart">
           <Cart />
         </Route>
-        <Route path='/'>
+        <Route path="/">
           <Products />
           <h1>Find your Groovy finds here!</h1>
         </Route>
@@ -45,6 +42,6 @@ const App = () => {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;

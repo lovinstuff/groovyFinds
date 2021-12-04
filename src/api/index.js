@@ -89,14 +89,16 @@ export async function updateProduct(product_id, fields, token) {
 
 // REGISTER A USER
 
-export async function registerUser(username, password) {
+export async function registerUser(username, password, email) {
+  console.log(username, password, email)
   try {
     const {data} = await axios
       .post(`${BASE}api/users/register`, {
         username,
         password,
+        email,
       })
-      
+      console.log(data)
     return data;
   } catch (error) {
     throw error;

@@ -1,6 +1,7 @@
 const express = require('express');
 const usersRouter = express.Router();
 const { createJWT, verify } = require('../utils');
+const jwt = require("jsonwebtoken");
 const {
   getAllUsers,
   createUser,
@@ -79,7 +80,8 @@ usersRouter.post('/register', async (req, res, next) => {
     });
   }
 
-  const { username, password, email } = req.body;
+  const { username, password, email, admin } = req.body;
+  let currentAdminStatus 
 
   try {
     const existingUserByEmail = await getUserByEmail(email);
@@ -104,10 +106,18 @@ usersRouter.post('/register', async (req, res, next) => {
         .status(406)
         .send({ message: 'Password must be at least 5 characters long' });
     }
-
-    const user = await createUser({ username, password, email });
-    const token = createJWT(user.email, user.id, user.username);
-
+    if (admin) {
+      currentAdminStatus = true
+    }else { currentAdminStatus = false}
+    const user = await createUser({ username, password, email, currentAdminStatus });
+    console.log(user)
+    // const token = createJWT(user.email, user.id, user.username);
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1w" }
+    );
+      console.log(token, "the token token")
     res.send({
       user: { id: user.id, username: user.username },
       message: 'Thank you for signing up',

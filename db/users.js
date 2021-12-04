@@ -21,7 +21,7 @@ const createUser = async ({ username, password, email, isAdmin }) => {
       `,
       [username, hashedPassword, email, isAdmin]
     );
-
+      console.log(user, "USER IN DB")
     return user;
   } catch (error) {
     throw error;

@@ -10,7 +10,20 @@ export default function Register({setIsLoggedIn}) {
   const [email, setEmail] = useState("");
 
   return (
-    <form className="register" onSubmit={(event) => event.preventDefault()}>
+    <form className="register" onSubmit={async (event) => {
+      event.preventDefault();
+      try {
+        console.log("Hello")
+        let submit = await registerUser(userName, password, email);
+        console.log(submit, "SUBMIT@!@!")
+        
+        storeToken(submit.token)
+
+
+      } catch (error) {
+        console.error(error);
+      }
+    }}>
       <h1>Register:</h1>
       <label>Name:</label>
       <input
@@ -40,25 +53,9 @@ export default function Register({setIsLoggedIn}) {
         onChange={(event) => setPassword(event.target.value)}
         placeholder=""
       />
-      {/* <button
-        onClick={async (event) => {
-          event.preventDefault();
-          // try {
-          //   let submit = await userRegister(name, email, username, password);
-          //   if (submit.name) {
-          //     alert(submit.message);
-          //   } else {
-          //     setLoggedIn(true);
-          //     alert(submit.message);
-          //     return <Redirect to="/" />;
-          //   }
-          // } catch (error) {
-          //   console.error(error);
-          }
-        }
-      >
+      <button type="submit">
         Register
-      </button>*/}
+      </button>
     </form>
   );
 
