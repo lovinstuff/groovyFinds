@@ -23,10 +23,8 @@ const App = () => {
     <div className="App">
       <NavBar />
       <Switch>
-
         <Route path='/Admin'><AdminUsers /></Route>
         <Route path='/Login'>
-    
           <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
         </Route>
 

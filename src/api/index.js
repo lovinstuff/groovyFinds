@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const BASE = "http://localhost:5000/"
+const BASE = `http://localhost:5000/`
 
 export const clearToken = () => {
   localStorage.removeItem("token");
