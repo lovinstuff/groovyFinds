@@ -1,5 +1,5 @@
-import axios from 'axios';
-const BASE = `http://localhost:5000/`
+import axios from "axios";
+const BASE = `http://localhost:5000/`;
 
 export const clearToken = () => {
   localStorage.removeItem("token");
@@ -31,15 +31,15 @@ export async function getProducts() {
 }
 
 export async function getAllUsers() {
-  try { 
-    const token = getToken()
+  try {
+    const token = getToken();
 
     const { data } = await axios.get("/api/Admin", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     return data;
   } catch (error) {
     throw error;
@@ -96,15 +96,13 @@ export async function updateProduct(product_id, fields, token) {
 // REGISTER A USER
 
 export async function registerUser(username, password, email) {
-  console.log(username, password, email)
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/register`, {
-        username,
-        password,
-        email,
-      })
-      console.log(data)
+    const { data } = await axios.post(`${BASE}api/users/register`, {
+      username,
+      password,
+      email,
+    });
+
     return data;
   } catch (error) {
     throw error;
@@ -115,12 +113,11 @@ export async function registerUser(username, password, email) {
 
 export async function loginUser(username, password) {
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/login`, {
-        username,
-        password,
-      })
-      console.log(data)
+    const { data } = await axios.post(`${BASE}api/users/login`, {
+      username,
+      password,
+    });
+
     return data;
   } catch (error) {
     console.log(error);

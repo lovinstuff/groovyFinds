@@ -1,6 +1,6 @@
 const express = require("express");
 const productsRouter = express.Router();
-console.log()
+
 // const {
 //   getAllProducts,
 // } = require("../db");

@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const usersRouter = express.Router();
-const { createJWT, verify } = require('../utils');
+const { createJWT, verify } = require("../utils");
 const jwt = require("jsonwebtoken");
 const {
   getAllUsers,
@@ -11,35 +11,35 @@ const {
   getUserById,
   updateUser,
   deleteUser,
-} = require('../db/users.js');
+} = require("../db/users.js");
 
-usersRouter.get('/', async (req, res) => {
+usersRouter.get("/", async (req, res) => {
   const user = verifyJWT(req.headers.authorization);
 
   if (user.isAdmin) {
     try {
       const users = await getAllUsers();
 
-     res.send({ users });
+      res.send({ users });
     } catch (error) {
       console.log(error);
     }
   }
 });
 
-usersRouter.get('/whoAmI', (req, res) => {
+usersRouter.get("/whoAmI", (req, res) => {
   if (req.user) {
     res.send({
       user: req.user,
     });
   } else {
     res.status(401).send({
-      message: 'You are not a signed in or authenticated user.',
+      message: "You are not a signed in or authenticated user.",
     });
   }
 });
 
-usersRouter.get('/admin', (req, res) => {
+usersRouter.get("/admin", (req, res) => {
   const user = verifyJWT(req.headers.authorization);
 
   if (user.isAdmin) {
@@ -49,7 +49,7 @@ usersRouter.get('/admin', (req, res) => {
   res.send(false);
 });
 
-usersRouter.get('/:id', async (req, res) => {
+usersRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -72,16 +72,17 @@ usersRouter.get('/:id', async (req, res) => {
   }
 });
 
-usersRouter.post('/register', async (req, res, next) => {
+usersRouter.post("/register", async (req, res, next) => {
   if (Object.keys(req.body).length < 3) {
     return res.status(400).send({
-      name: 'CredentialsRequired',
-      message: 'Please provide email, username and password to register.',
+      name: "CredentialsRequired",
+      message: "Please provide email, username and password to register.",
     });
   }
 
   const { username, password, email, admin } = req.body;
-  let currentAdminStatus 
+
+  let currentAdminStatus;
 
   try {
     const existingUserByEmail = await getUserByEmail(email);
@@ -89,38 +90,44 @@ usersRouter.post('/register', async (req, res, next) => {
 
     if (existingUserByEmail) {
       return res.status(400).send({
-        name: 'EmailExistsError',
-        message: 'A user under that email already exists.',
+        name: "EmailExistsError",
+        message: "A user under that email already exists.",
       });
     }
 
     if (existingUserUsername) {
       return res.status(400).send({
-        name: 'UserExistsError',
-        message: 'A user under that username already exists.',
+        name: "UserExistsError",
+        message: "A user under that username already exists.",
       });
     }
 
     if (password.length < 5 || !password) {
       return res
         .status(406)
-        .send({ message: 'Password must be at least 5 characters long' });
+        .send({ message: "Password must be at least 5 characters long" });
     }
     if (admin) {
-      currentAdminStatus = true
-    }else { currentAdminStatus = false}
-    const user = await createUser({ username, password, email, currentAdminStatus });
-    console.log(user)
-    // const token = createJWT(user.email, user.id, user.username);
+      currentAdminStatus = true;
+    } else {
+      currentAdminStatus = false;
+    }
+    const user = await createUser({
+      username,
+      password,
+      email,
+      currentAdminStatus,
+    });
+
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: "1w" }
     );
-      console.log(token, "the token token")
+
     res.send({
       user: { id: user.id, username: user.username },
-      message: 'Thank you for signing up',
+      message: "Thank you for signing up",
       token,
     });
   } catch (error) {
@@ -128,39 +135,37 @@ usersRouter.post('/register', async (req, res, next) => {
   }
 });
 
-usersRouter.post('/login', async (req, res, next) => {
+usersRouter.post("/login", async (req, res, next) => {
   if (Object.keys(req.body).length < 2) {
-    return res.status(400).send({
-      name: 'CredentialsRequired',
-      message: 'Please provide email and password to login.',
+    next({
+      name: "CredentialsRequired",
+      message: "Please provide email and password to login.",
     });
   }
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password || password.length < 5) {
-    res.status(400).send({
-      name: 'MissingCredentialsError',
-      message: 'Please supply both a username and password',
+  if (!username || !password || password.length < 5) {
+    next({
+      name: "MissingCredentialsError",
+      message: "Please supply both a username and password",
     });
-    next();
   }
 
   try {
-    const user = await getUserByEmailAndPassword({ email, password });
+    const user = await getUserByUsername({ username, password });
+
     if (!user) {
-      res.status(401).send({ message: 'User not found.' });
-    }
-
-    if (user === false) {
-      res.status(400).send({
-        name: 'IncorrectCredentialsError',
-        message: 'Email or password is incorrect',
+      next({
+        name: "IncorrectCredentialsError",
+        message: "Email or password is incorrect",
       });
-    }
-
-    if (user) {
-      const token = createJWT(user.email, user.id, user.username, user.isAdmin);
+    } else {
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1w" }
+      );
 
       res.send({
         user: { id: user.id, username: user.username },
@@ -173,12 +178,12 @@ usersRouter.post('/login', async (req, res, next) => {
   }
 });
 
-usersRouter.patch('/:id', (req, res) => {
+usersRouter.patch("/:id", (req, res) => {
   const { id } = req.params;
   const user = verifyJWT(req.headers.authorization);
 
   if (!user.isAdmin) {
-    return res.send(':P');
+    return res.send(":P");
   }
 
   const { username, email, isadmin } = req.body;
@@ -200,11 +205,11 @@ usersRouter.patch('/:id', (req, res) => {
   }
 });
 
-usersRouter.delete('/:id', async (req, res) => {
+usersRouter.delete("/:id", async (req, res) => {
   const user = verifyJWT(req.headers.authorization);
 
   if (!user.isAdmin) {
-    return res.send('You lack the power');
+    return res.send("You lack the power");
   }
 
   const { id } = req.params;
