@@ -1,13 +1,12 @@
+require('dotenv').config()
 const apiRouter = require('express').Router();
 const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = process.env
 
 apiRouter.get("/", (req, res, next) => {
-  console.log("!!!!!!!", JWT_SECRET)
   res.send({
     message: "API is under construction!", 
   });
-}); 
+});
 
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";

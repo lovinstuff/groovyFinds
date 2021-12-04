@@ -80,5 +80,4 @@ module.exports = {
   getCurrentSessionCartItems,
   changeItemQuantity,
   deleteCartItem,
-  getTotalPrice,
 };

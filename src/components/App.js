@@ -21,6 +21,7 @@ const App = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [cart, setCart] = useState([]);
   const [shoppingSession, setShoppingSession] = useState(0);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const App = () => {
           <Cart setShoppingSession={ setShoppingSession }/>
         </Route>
         <Route path='/'>
-          <Products />
+          <Products cart={ cart } setCart={ setCart }/>
           <h1>Find your Groovy finds here!</h1>
         </Route>
         {/* can create another route in here for your component */}

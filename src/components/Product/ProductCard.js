@@ -1,13 +1,12 @@
 import React from "react";
-//import { addItemToCart } from "../../api";
+import { addItemToCart } from "../../api";
 
-
-const ProductCard = ({ index, product, cart }) => {
+const ProductCard = ({ index, product, cart, setCart }) => {
   const { name, description, price, image_url, in_stock } = product;
   const token = localStorage.getItem("token");
   const handleAddtoCart = async () => {
     if (token) {
-     // await addItemToCart(product.id, 1, token);
+     await addItemToCart(product.id, 1, token);
     }
     const existingProductInCart = cart.find((element) => element.name === name);
     if (existingProductInCart) {

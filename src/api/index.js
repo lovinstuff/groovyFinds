@@ -134,7 +134,12 @@ export async function getCurrentSessionCartItems() {
   }
 }
 
-export async function addNewCartItem(sessionId, albumId, price, quantity) {
+export async function addItemToCart(sessionId, albumId, price, quantity, token) {
+  if (getToken() !== token) {
+    return {
+      message: 'You do not have authority to add to this cart!'
+    }
+  }
   try {
     const { data } = await axios.patch(`${BASE}api/cart/${ sessionId }`, {
       sessionId,

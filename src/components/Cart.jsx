@@ -4,30 +4,29 @@ import {
   updateItemQuantity,
   deleteCartItem,
 } from "../api";
+import CartCard from "./CartCard";
+import Checkout from "./Checkout";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  // const [cart, setCart] = useState([]);
 
-  async function getCartItems() {
-    try {
-      const cartItems = await getCurrentSessionCartItems();
-      setCartItems(cartItems);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // useEffect(() => {
+  //   const cartString = localStorage.getItem('Cart')
+  //   setCart(JSON.parse(cartString))
+  // })
+  const [checkout, setCheckout] = useState(false);
 
-  useEffect(() => {
-    getCartItems();
-  });
+  const cartString = localStorage.getItem("Cart");
+  const cart = JSON.parse(cartString);
 
-  let totalPrice = 0;
-  cartItems.forEach((item) => (totalPrice = totalPrice + item.price));
+  let sum = 0;
+  cart.forEach((item) => sum += item.price * item.quantity)
 
-  if (cartItems === []) {
+  const [total, setTotal] = useState(sum);
+  if (cart === []) {
     return (
       <div className="cartBox">
-        <h2>You have no items in cart yet!</h2>
+        <h3>You don't have anything added to cart!</h3>
       </div>
     );
   }
@@ -35,48 +34,33 @@ const Cart = () => {
   return (
     <div className="cartBox">
       <div className="total">
-        <h3>Total: {totalPrice}</h3>
+        <h3>Total: {total}</h3>
       </div>
       <div className="cartItems">
-        {cartItems.map((item) => {
+        {cart.map((item) => {
           return (
-            <div className="cartItem">
-              <img
-                className="cartItemImg"
-                src={item.image_url}
-                alt="cart item img"
-              />
-              <h3 className="cartItemName">{item.name}</h3>
-              <h3 className="cartItemPrice">${item.price} each</h3>
-              <h3 className="cartItemSubTotal">
-                Subtotal: ${item.price * item.quantity}
-              </h3>
-              <div className="cartItemQuantityBox">
-                <label for="quantity">Quantity:</label>
-                <select
-                  name="quantity"
-                  className="cartItemQuantityDropdown"
-                  onChange={(e) => {
-                    try {
-                        const newItem = await updateItemQuantity(item.id, e.target.value)
-                    } catch(err){
-                        console.log(err)
-                    }
-                  }}
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                </select>
-              </div>
-            </div>
+            <CartCard
+              id={item.id}
+              name={item.name}
+              quantity={item.quantity}
+              price={item.price}
+              image_url={item.image_url}
+              total={total}
+              setTotal={setTotal}
+            />
           );
         })}
       </div>
+      <button 
+        className="checkoutBtn" 
+        onClick={(e) => {
+          e.preventDefault()
+          setCheckout(true);
+        }}
+      >
+        Checkout
+      </button>
+      {checkout ? <Checkout /> : null}
     </div>
   );
 };
