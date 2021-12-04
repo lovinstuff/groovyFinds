@@ -18,7 +18,7 @@ const createJWT = (email, id, username, isAdmin) => {
 };
 
 const verifyJWT = (authHeader) => {
-  const [, token] = authHeader.split('Bearer ');
+  const [, token] = authHeader.split("Bearer ");
   try {
     if (token === null) {
       return null;
@@ -32,7 +32,7 @@ const verifyJWT = (authHeader) => {
 
     return validatedToken;
   } catch (error) {
-    console.error('Bad token');
+    console.error("Bad token");
   }
 };
 
@@ -66,5 +66,4 @@ module.exports = {
   authMiddleware,
   hash,
   comparePasswords,
-  jwt
 };

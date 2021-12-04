@@ -1,11 +1,10 @@
-
-const client = require('./client.js');
-const { hash, comparePasswords } = require('../utils');
+const client = require("./client.js");
+const { hash, comparePasswords } = require("../utils");
 
 const createUser = async ({ username, password, email, isAdmin }) => {
   const hashedPassword = hash(password);
 
-  if (isAdmin !== 'true') {
+  if (isAdmin !== "true") {
     isAdmin = false;
   }
 
@@ -21,7 +20,7 @@ const createUser = async ({ username, password, email, isAdmin }) => {
       `,
       [username, hashedPassword, email, isAdmin]
     );
-
+    console.log(user, "USER IN DB");
     return user;
   } catch (error) {
     throw error;
@@ -31,7 +30,7 @@ const createUser = async ({ username, password, email, isAdmin }) => {
 const updateUser = async (userId, fields = {}) => {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(', ');
+    .join(", ");
 
   if (setString.length === 0) {
     return;
@@ -136,7 +135,7 @@ const getUserByEmail = async (email) => {
   }
 };
 
-const getUserByUsername = async (username) => {
+const getUserByUsername = async ({ username }) => {
   try {
     const {
       rows: [user],

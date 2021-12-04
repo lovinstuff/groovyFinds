@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import AdminUsers from "./Admin_Page/Admin_Users";
 
 import {
@@ -13,12 +13,12 @@ import Cart from './Cart'
 import NavBar from './NavBar'
 import Products from './Product/Products'
 
+
 const {
   storeSessionId
 } = require('../auth/index')
 
 const App = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [cart, setCart] = useState([]);
@@ -32,12 +32,19 @@ const App = () => {
     <div className="App">
       <NavBar />
       <Switch>
-        <Route path='/Admin'><AdminUsers /></Route>
-        <Route path='/Login'>
-          <Login userName={userName} setUserName={setUserName} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
+        <Route path="/Admin">
+          <AdminUsers />
         </Route>
-        <Route path='/Register'>
-          <Register setIsLoggedIn = {setIsLoggedIn} />
+        <Route path="/Login">
+          <Login
+            userName={userName}
+            setUserName={setUserName}
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+          />
+        </Route>
+        <Route path="/Register">
+          <Register setIsLoggedIn={setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
           <Cart setShoppingSession={ setShoppingSession }/>
@@ -50,6 +57,6 @@ const App = () => {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;
