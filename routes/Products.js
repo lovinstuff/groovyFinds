@@ -8,8 +8,8 @@ console.log()
 //Gets all products
 productsRouter.get("/", async (req, res, next) => {
   try {
-    // const allProducts = await getAllProducts();
-    // res.send(allProducts);
+    const allProducts = await getAllProducts();
+    res.send(allProducts);
   } catch (error) {
     next(error);
   }

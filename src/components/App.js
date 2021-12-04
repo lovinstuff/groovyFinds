@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminUsers from "./Admin_Page/Admin_Users";
 
-
 import {
   Route, 
   Switch, 
@@ -14,10 +13,19 @@ import Cart from './Cart'
 import NavBar from './NavBar'
 import Products from './Product/Products'
 
+const {
+  storeSessionId
+} = require('../auth/index')
+
 const App = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [shoppingSession, setShoppingSession] = useState(0);
+
+  useEffect(() => {
+    storeSessionId(shoppingSession)
+  })
 
   return (
     <div className="App">
@@ -31,7 +39,7 @@ const App = () => {
           <Register setIsLoggedIn = {setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
-          <Cart />
+          <Cart setShoppingSession={ setShoppingSession }/>
         </Route>
         <Route path='/'>
           <Products />

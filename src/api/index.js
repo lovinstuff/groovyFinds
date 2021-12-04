@@ -1,5 +1,5 @@
-import axios from 'axios';
-const BASE = `http://localhost:5000/`
+import axios from "axios";
+const BASE = `http://localhost:5000/`;
 
 export const clearToken = () => {
   localStorage.removeItem("token");
@@ -90,12 +90,11 @@ export async function updateProduct(product_id, fields, token) {
 
 export async function registerUser(username, password) {
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/register`, {
-        username,
-        password,
-      })
-      
+    const { data } = await axios.post(`${BASE}api/users/register`, {
+      username,
+      password,
+    });
+
     return data;
   } catch (error) {
     throw error;
@@ -106,12 +105,11 @@ export async function registerUser(username, password) {
 
 export async function loginUser(username, password) {
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/login`, {
-        username,
-        password,
-      })
-      console.log(data)
+    const { data } = await axios.post(`${BASE}api/users/login`, {
+      username,
+      password,
+    });
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -123,4 +121,48 @@ export async function loginUser(username, password) {
 export async function logOut() {
   const token = getToken();
   return token ? localStorage.removeItem("token") : "";
+}
+
+// cart functions
+
+export async function getCurrentSessionCartItems() {
+  try {
+    const { data } = await axios.get(`${BASE}api/cart`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function addNewCartItem(sessionId, albumId, price, quantity) {
+  try {
+    const { data } = await axios.patch(`${BASE}api/cart/${ sessionId }`, {
+      sessionId,
+      albumId,
+      price,
+      quantity,
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function updateItemQuantity(cartItemID, quantity) {
+  try {
+    const {data} = await axios.post(`${BASE}api/cart/${ cartItemID }`, {quantity});
+
+    return data;
+  } catch(err){
+    console.log(err);
+  }
+}
+
+export async function deleteCartItem(cartItemID) {
+  try {
+    const {data} = await axios.delete(`${BASE}api/cart/${ cartItemID }`)
+    return data;
+  } catch(err){
+    console.log(err);
+  }
 }
