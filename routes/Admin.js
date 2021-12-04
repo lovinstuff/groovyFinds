@@ -2,7 +2,27 @@ const express = require("express");
 const adminRouter = express.Router();
 const { getAllUsers } = require("../db");
 
-adminRouter.get("/", async (req, res, next) => {
+function AdminCheck (req, res, next) {
+  if (!req.user){
+    res.status(401)
+    next({name:"Login Error" , message: "You logged in to this route" })
+    
+        }
+  else if (!req.user.isAdmin){
+          res.status(403)
+          next({name:"Admin Error" , message: "Permission Denied!" })
+          
+              }
+  else {
+
+    next()
+
+  }
+        
+}
+
+
+adminRouter.get("/", AdminCheck, async (req, res, next) => {
     try {
       const allUsers = await getAllUsers();
   

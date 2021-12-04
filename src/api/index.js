@@ -31,8 +31,15 @@ export async function getProducts() {
 }
 
 export async function getAllUsers() {
-  try {
-    const { data } = await axios.get("/api/users");
+  try { 
+    const token = getToken()
+
+    const { data } = await axios.get("/api/Admin", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
     return data;
   } catch (error) {
     throw error;
