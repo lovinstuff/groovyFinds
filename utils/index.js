@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const createJWT = (email, id, username, isAdmin) => {
   const token = jwt.sign(
@@ -11,14 +11,14 @@ const createJWT = (email, id, username, isAdmin) => {
       isAdmin,
     },
     JWT_SECRET,
-    { expiresIn: '1w' }
+    { expiresIn: "1w" }
   );
 
   return token;
 };
 
 const verifyJWT = (authHeader) => {
-  const [, token] = authHeader.split('Bearer ');
+  const [, token] = authHeader.split("Bearer ");
   try {
     if (token === null) {
       return null;
@@ -32,7 +32,7 @@ const verifyJWT = (authHeader) => {
 
     return validatedToken;
   } catch (error) {
-    console.error('Bad token');
+    console.error("Bad token");
   }
 };
 
