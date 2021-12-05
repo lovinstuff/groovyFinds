@@ -1,0 +1,82 @@
+.cartItem {
+    margin: 30px;
+    border-style: dotted;
+    display: grid;
+    grid-template-columns: repeat(6, 15%);
+    grid-template-rows: 100px;
+    column-gap: 20px;
+}
+
+.cartItemImg {
+    width: 100px;
+    height: 100px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.cartItemName {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.cartItemPrice {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.cartItemSubtotal {
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+
+.cartItemQuantity{
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
+.cartItemQuantityList {
+    height: 30px;
+    width: 40px;
+    background-color: aqua;
+}
+
+.cartItemDeleteBtn {
+    height: 40px;
+    width: 70px;
+    background-color: aquamarine;
+}
+
+.checkoutBtn {
+    height: 50px;
+    width: 100px;
+    background-color: red;
+    margin-left: 30px;
+}
+
+.checkout {
+    width: 50%;
+    margin: 30px;
+}
+
+.checkout h2 {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.checkout fieldset input {
+    width: 100%;
+    height: 30px;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+
+.checkout fieldset label {
+    margin-top: 5px;
+}
+
+.checkout form button {
+    margin-top: 30px;
+    height: 50px;
+    width: 100px;
+    background-color: red;
+}

@@ -3,12 +3,12 @@ import {
   getCurrentSessionCartItems,
   updateItemQuantity,
   deleteCartItem,
-} from "../api";
+} from "../../api"
 import CartCard from "./CartCard";
 import Checkout from "./Checkout";
+import "./Cart.css";
 
 const Cart = () => {
-  // const [cart, setCart] = useState([]);
 
   // useEffect(() => {
   //   const cartString = localStorage.getItem('Cart')
