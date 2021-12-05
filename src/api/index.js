@@ -117,7 +117,6 @@ export async function loginUser(username, password) {
       username,
       password,
     });
-
     return data;
   } catch (error) {
     console.log(error);
@@ -130,3 +129,53 @@ export async function logOut() {
   const token = getToken();
   return token ? localStorage.removeItem("token") : "";
 }
+
+// cart functions
+
+export async function getCurrentSessionCartItems() {
+  try {
+    const { data } = await axios.get(`${BASE}api/cart`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function addItemToCart(sessionId, albumId, price, quantity, token) {
+  if (getToken() !== token) {
+    return {
+      message: 'You do not have authority to add to this cart!'
+    }
+  }
+  try {
+    const { data } = await axios.patch(`${BASE}api/cart/${ sessionId }`, {
+      sessionId,
+      albumId,
+      price,
+      quantity,
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function updateItemQuantity(cartItemID, quantity) {
+  try {
+    const {data} = await axios.post(`${BASE}api/cart/${ cartItemID }`, {quantity});
+
+    return data;
+  } catch(err){
+    console.log(err);
+  }
+}
+
+export async function deleteCartItem(cartItemID) {
+  try {
+    const {data} = await axios.delete(`${BASE}api/cart/${ cartItemID }`)
+    return data;
+  } catch(err){
+    console.log(err);
+  }
+}
+

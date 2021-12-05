@@ -52,8 +52,10 @@ async function buildTables() {
         id SERIAL PRIMARY KEY, 
         session_id INTEGER REFERENCES shopping_session(id), 
         album_id INTEGER REFERENCES albums(id), 
+        name VARCHAR(255) UNIQUE NOT NULL, 
         price integer, 
-        quantity INTEGER NOT NULL, 
+        image_url TEXT NOT NULL, 
+        quantity INTEGER NOT NULL,
         created_at TIMESTAMP
       );
   `); // my idea behind the shopping_session table is that each time someone is on the page on the same browser, they have an active shopping session, and cart_item table, we will get the cart items from cart_items where session_id is equal to the current active shopping session.
