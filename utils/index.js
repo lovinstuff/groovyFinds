@@ -1,6 +1,7 @@
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET }= process.env;
+const bcrypt = require("bcrypt");
 require('dotenv').config()
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 const createJWT = (email, id, username, isAdmin) => {
   const token = jwt.sign(

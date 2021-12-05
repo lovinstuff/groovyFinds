@@ -49,7 +49,7 @@ const App = () => {
         <Route path='/Cart'>
           <Cart setShoppingSession={ setShoppingSession }/>
         </Route>
-        <Route path='/'>
+        <Route exact path='/'>
           <Products cart={ cart } setCart={ setCart }/>
           <h1>Find your Groovy finds here!</h1>
         </Route>
