@@ -11,7 +11,7 @@ const Checkout = () => {
 
   return (
     <div className="checkout">
-      <h2>Enter Address: </h2>
+      <h2 className='addressPrompt'>Enter Address: </h2>
       <form 
         className="addressForm" 
         onSubmit={(e) => {
@@ -19,8 +19,8 @@ const Checkout = () => {
             alert('Your purchase was successful!')
         }}
       >
-        <fieldset>
-          <label htmlFor="streetAddress">
+        <fieldset className='streetAddressFieldset'>
+          <label className='streetAddressLabel' htmlFor="streetAddress">
             Street Address:
             <input
               className="streetAddressInput"
@@ -34,8 +34,8 @@ const Checkout = () => {
             />
           </label>
         </fieldset>
-        <fieldset>
-          <label htmlFor="city">
+        <fieldset className='cityFieldset'>
+          <label className='cityLabel' htmlFor="city">
             City:
             <input
               className="cityInput"
@@ -49,8 +49,8 @@ const Checkout = () => {
             />
           </label>
         </fieldset>
-        <fieldset>
-          <label htmlFor="state">
+        <fieldset className='stateFieldset'>
+          <label className='stateLabel' htmlFor="state">
             State:
             <input
               className="state"
@@ -64,8 +64,8 @@ const Checkout = () => {
             />
           </label>
         </fieldset>
-        <fieldset>
-          <label htmlFor="zip">
+        <fieldset className='zipFieldset'>
+          <label className='zipLabel' htmlFor="zip">
             Zip Code:
             <input
               className="zipInut"
