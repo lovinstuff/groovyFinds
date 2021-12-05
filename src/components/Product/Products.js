@@ -30,6 +30,7 @@ const Products = ({ cart, setCart }) => {
               index={index}
               product={product}
               cart={cart}
+              setCart={setCart}
             />
           );
         })}

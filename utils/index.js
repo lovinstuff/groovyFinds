@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET }= process.env;
 const bcrypt = require("bcrypt");
+require('dotenv').config()
 
 const createJWT = (email, id, username, isAdmin) => {
   const token = jwt.sign(
@@ -10,8 +11,8 @@ const createJWT = (email, id, username, isAdmin) => {
       username,
       isAdmin,
     },
-    JWT_SECRET,
-    { expiresIn: "1w" }
+    process.env.JWT_SECRET,
+    { expiresIn: '1w' }
   );
 
   return token;
@@ -24,7 +25,7 @@ const verifyJWT = (authHeader) => {
       return null;
     }
 
-    const validatedToken = token ? jwt.verify(token, JWT_SECRET) : false;
+    const validatedToken = token ? jwt.verify(token, process.env.JWT_SECRET) : false;
 
     if (!validatedToken) {
       return null;

@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET }= process.env;
+require('dotenv').config()
 const apiRouter = require('express').Router();
-// require('dotenv').config()
+const jwt = require('jsonwebtoken')
+
 apiRouter.get("/", (req, res, next) => {
   res.send({
-    message: "API is under construction!"
+    message: "API is under construction!", 
   });
 });
 
@@ -18,7 +20,7 @@ apiRouter.use(async (req, res, next) => {
     const token = auth.slice(prefix.length);
 
     try {
-      const parsedToken = jwt.verify(token, JWT_SECRET);
+      const parsedToken = jwt.verify(token, process.env.JWT_SECRET);
 
       const id = parsedToken && parsedToken.id;
       if (id) {
