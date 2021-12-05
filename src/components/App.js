@@ -34,7 +34,7 @@ const App = () => {
         <Route path="/Cart">
           <Cart />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Products />
           <h1>Find your Groovy finds here!</h1>
         </Route>
