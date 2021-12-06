@@ -9,7 +9,7 @@
     background: white;
     display: flex;
     width: 40%;
-    border: 1px solid #eee;
+    border: 1px solid #8B4513;
     min-width: 600px;
     margin: 10px;
   }
@@ -30,7 +30,7 @@
   textarea,
   .inStock-Container {
     background-color: #ebebeb;
-    border: 1px solid #eee;
+    border: 1px solid #B22222;
   }
   
   .EditProductCard input {
