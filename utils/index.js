@@ -10,7 +10,6 @@ const createJWT = (email, id, username, isAdmin) => {
       username,
       isAdmin,
     },
-    JWT_SECRET,
     { expiresIn: "1w" }
   );
 

@@ -1,8 +1,11 @@
-const apiRouter = require('express').Router();
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = process.env;
+
+const apiRouter = require("express").Router();
 // require('dotenv').config()
 apiRouter.get("/", (req, res, next) => {
   res.send({
-    message: "API is under construction!"
+    message: "API is under construction!",
   });
 });
 
@@ -34,15 +37,15 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-const adminRouter = require('./Admin');
-const usersRouter = require('./user');
+const adminRouter = require("./Admin");
+const usersRouter = require("./user");
 apiRouter.use("/users", usersRouter);
-apiRouter.use ("/admin", adminRouter);
+apiRouter.use("/admin", adminRouter);
 
-const productsRouter = require('./Products')
-apiRouter.use("/products", productsRouter)
+const productsRouter = require("./Products");
+apiRouter.use("/products", productsRouter);
 
-const cartRouter = require('./cart');
-apiRouter.use('/cart', cartRouter);
+const cartRouter = require("./cart");
+apiRouter.use("/cart", cartRouter);
 
 module.exports = apiRouter;

@@ -6,7 +6,7 @@ export default function AdminUsers() {
 
   const fetchAllUsers = async () => {
     const allUsers = await getAllUsers();
-
+console.log(allUsers, 'all users')
     setUsers(allUsers);
   };
   useEffect(() => {

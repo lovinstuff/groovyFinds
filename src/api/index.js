@@ -33,8 +33,9 @@ export async function getProducts() {
 export async function getAllUsers() {
   try {
     const token = getToken();
+    console.log('token', token)
 
-    const { data } = await axios.get("/api/Admin", {
+    const { data } = await axios.get("/api/admin", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
