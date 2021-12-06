@@ -5,6 +5,8 @@ const {
   changeItemQuantity,
   deleteCartItem,
   getCartItemsByUser,
+  createShoppingSession,
+  updateShoppingSessionToFalse,
 } = require("../db");
 
 //const {
@@ -21,6 +23,25 @@ cartRouter.get("/:userId", async (req, res, next) => {
     next(err);
   }
 });
+
+cartRouter.patch('/newsession', async (req, res, next) => {
+  try {
+    const newSession = await createShoppingSession(req.body.user_id ? req.body.user_id : null)
+    res.send(newSession.id)
+  } catch (err) {
+    next(err);
+  }
+})
+
+cartRouter.post('/:shoppingSessionID', async (req, res, next) => {
+  const shoppingSessionID = req.params.shoppingSessionID;
+  try {
+    const updatedSession = await updateShoppingSessionToFalse(shoppingSessionID)
+    res.send(updatedSession)
+  } catch(err) {
+    next(err);
+  }
+})
 
 cartRouter.patch("/", async (req, res, next) => {
   const { sessionId, albumId, price, image_url, quantity } = req.body;

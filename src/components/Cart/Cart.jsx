@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getToken } from "../../auth";
 import CartCard from "./CartCard";
 import Checkout from "./Checkout";
 import "./Cart.css";
@@ -10,7 +11,7 @@ const Cart = ({setShoppingSession}) => {
   const cartItems = JSON.parse(cartString);
   const [cart, setCart] = useState(cartItems);
   const [total, setTotal] = useState(0);
-
+  const token = getToken();
   useEffect(() => {
     let sum = 0;
     cart.forEach((item) => sum += item.price * item.quantity)
@@ -49,7 +50,8 @@ const Cart = ({setShoppingSession}) => {
         className="checkoutBtn" 
         onClick={(e) => {
           e.preventDefault()
-          setCheckout(true);
+          if (token) setCheckout(true)
+          else alert('You must be logged in to checkout!')
         }}
       >
         Checkout

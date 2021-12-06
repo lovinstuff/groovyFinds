@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSessionId } from '../auth';
+import { getToken, getSessionId } from '../auth';
 const BASE = `http://localhost:5000/`
 
 export async function getProducts() {
@@ -116,6 +116,15 @@ export async function logOut() {
 
 // cart functions
 
+export async function createNewSession() {
+  try {
+    const {data} = await axios.patch(`${BASE}api/cart/newsession`)
+    return data;
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export async function getCartItemsByUser(userId) {
   try {
     const {data} = await axios.get(`${BASE}api/cart/${userId}`)
@@ -142,7 +151,7 @@ export async function addItemToCart(product, token) {
       albumId,
       price,
       image_url, 
-      quantity,
+      quantity: 1
     });
     return data;
   } catch (err) {
