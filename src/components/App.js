@@ -47,13 +47,16 @@ const App = () => {
           <Register setIsLoggedIn={setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
-          <Cart setShoppingSession={ setShoppingSession }/>
+          <Cart 
+            setShoppingSession={ setShoppingSession } 
+            cart={cart} 
+            setCart={setCart}
+          />
         </Route>
         <Route exact path='/'>
           <Products cart={ cart } setCart={ setCart }/>
           <h1>Find your Groovy finds here!</h1>
         </Route>
-        {/* can create another route in here for your component */}
       </Switch>
     </div>
   );

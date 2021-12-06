@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { loginUser } from "../api";
-import { storeToken, getToken, storeUserName } from "../auth";
+import { storeToken, getToken, storeUsername, storeUserID } from "../auth";
 import { useHistory } from "react-router-dom";
 
 export default function Login(props) {
@@ -28,6 +28,8 @@ export default function Login(props) {
           let submit = await loginUser(userName, password);
 
           storeToken(submit.token);
+          
+          storeUserID(submit.id);
         } catch (error) {
           console.error(error);
         }

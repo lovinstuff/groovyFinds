@@ -1,25 +1,6 @@
 import axios from 'axios';
+import { getSessionId } from '../auth';
 const BASE = `http://localhost:5000/`
-
-export const clearToken = () => {
-  localStorage.removeItem("token");
-};
-
-export const setToken = (token) => {
-  localStorage.setItem("token", token);
-};
-
-export const getToken = () => {
-  return localStorage.getItem("token");
-};
-
-export const loggedAdmin = () => {
-  localStorage.setItem("admin", "isAdmin");
-};
-
-export const clearAdmin = () => {
-  localStorage.removeItem("admin");
-};
 
 export async function getProducts() {
   try {
@@ -135,26 +116,32 @@ export async function logOut() {
 
 // cart functions
 
-export async function getCurrentSessionCartItems() {
+export async function getCartItemsByUser(userId) {
   try {
-    const { data } = await axios.get(`${BASE}api/cart`);
+    const {data} = await axios.get(`${BASE}api/cart/${userId}`)
     return data;
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
 }
 
-export async function addItemToCart(sessionId, albumId, price, quantity, token) {
+export async function addItemToCart(product, token) {
+  const albumId = product.id;
+  const price = product.price;
+  const image_url = product.image_url;
+  const sessionId = getSessionId();
+
   if (getToken() !== token) {
     return {
       message: 'You do not have authority to add to this cart!'
     }
   }
   try {
-    const { data } = await axios.patch(`${BASE}api/cart/${ sessionId }`, {
+    const { data } = await axios.patch(`${BASE}api/cart`, {
       sessionId,
       albumId,
       price,
+      image_url, 
       quantity,
     });
     return data;

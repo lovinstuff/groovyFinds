@@ -20,9 +20,30 @@ function getToken() {
   return myToken;
 }
 
-function clearCurrentUser() {
+function clearToken() {
   localStorage.removeItem("token");
 }
+
+function storeUserID(userId) {
+  localStorage.setItem("UserID", JSON.stringify(userId))
+}
+
+function getUserID() {
+  const userID = JSON.parse(localStorage.getItem("UserID"))
+  return userID
+}
+
+function clearUserID() {
+  localStorage.removeItem("UserID");
+}
+
+const loggedAdmin = () => {
+  localStorage.setItem("admin", "isAdmin");
+};
+
+const clearAdmin = () => {
+  localStorage.removeItem("admin");
+};
 
 module.exports = {
   storeSessionId,
@@ -30,5 +51,10 @@ module.exports = {
   clearSessionId, 
   storeToken, 
   getToken, 
-  clearCurrentUser
+  clearToken,
+  storeUserID, 
+  getUserID, 
+  clearUserID,  
+  loggedAdmin, 
+  clearAdmin
 }

@@ -26,20 +26,19 @@ const addToCart = async (
   }
 };
 
-const getCurrentSessionCartItems = async () => {
-  const sessionId = getSessionId();
+const getCartItemsByUser = async (user_id) => {
   try {
-    const { rows: cartItems } = await client.query(
-      `
-            SELECT * FROM cart_item WHERE session_id=$1;
-        `,
-      [sessionId]
-    );
+    const { rows: cartItems } = await client.query(`
+      SELECT * FROM cart_item
+      JOIN shopping_session ON shopping_session.id=cart_item.session_id
+      WHERE shopping_session.user_id=$1 AND shopping_session.is_active=true;
+    `, [user_id])
+
     return cartItems;
   } catch (err) {
     throw err;
   }
-};
+}
 
 const changeItemQuantity = async (id, newQuantity) => {
   try {
@@ -77,7 +76,7 @@ const deleteCartItem = async (id) => {
 
 module.exports = {
   addToCart,
-  getCurrentSessionCartItems,
   changeItemQuantity,
   deleteCartItem,
+  getCartItemsByUser
 };

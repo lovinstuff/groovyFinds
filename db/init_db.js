@@ -22,16 +22,16 @@ async function buildTables() {
     // build tables in correct order
     await client.query(`
       CREATE TABLE products(
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255) UNIQUE NOT NULL,
-      description VARCHAR(255) NOT NULL,
-      price DECIMAL DEFAULT 0,
-      image_url TEXT NOT NULL,
-      type VARCHAR(255) NOT NULL,
-      in_stock BOOLEAN DEFAULT true,
-      inventory INTEGER NOT NULL,
-      active BOOLEAN DEFAULT true
-  );
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        description VARCHAR(255) NOT NULL,
+        price DECIMAL DEFAULT 0,
+        image_url TEXT NOT NULL,
+        type VARCHAR(255) NOT NULL,
+        in_stock BOOLEAN DEFAULT true,
+        inventory INTEGER NOT NULL,
+        active BOOLEAN DEFAULT true
+      );
 
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
@@ -44,14 +44,14 @@ async function buildTables() {
       CREATE TABLE shopping_session(
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id), 
-        total INTEGER, 
-        created_at TIMESTAMP
+        created_at TIMESTAMP, 
+        is_active BOOLEAN NOT NULL
       );
 
       CREATE TABLE cart_item(
         id SERIAL PRIMARY KEY, 
         session_id INTEGER REFERENCES shopping_session(id), 
-        album_id INTEGER REFERENCES albums(id), 
+        album_id INTEGER REFERENCES products(id), 
         name VARCHAR(255) UNIQUE NOT NULL, 
         price integer, 
         image_url TEXT NOT NULL, 

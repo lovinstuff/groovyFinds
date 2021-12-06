@@ -1,12 +1,24 @@
 import React from "react";
-import { addItemToCart } from "../../api";
+import { addItemToCart, getCartItemsByUser, updateItemQuantity } from "../../api";
+import { getUserID } from "../../auth";
 
 const ProductCard = ({ index, product, cart, setCart }) => {
   const { name, description, price, image_url, in_stock } = product;
   const token = localStorage.getItem("token");
+  const userId = getUserID();
   const handleAddtoCart = async () => {
     if (token) {
-     await addItemToCart(product.id, 1, token);
+      try {
+        const cartItemsByUser = await getCartItemsByUser(userId);
+        const foundItem = cartItemsByUser.find(item => item.name === name);
+        if (foundItem) {
+          await updateItemQuantity(foundItem.id, foundItem.quantity+1);
+        } else {
+          await addItemToCart(product, token);
+        }
+      } catch(err) {
+        console.log(err)
+      }
     }
     const existingProductInCart = cart.find((element) => element.name === name);
     if (existingProductInCart) {
@@ -17,6 +29,7 @@ const ProductCard = ({ index, product, cart, setCart }) => {
       cart.push(product);
     }
     localStorage.setItem("Cart", JSON.stringify(cart));
+    setCart(cart);
     alert(`${name} added to cart!`);
   };
 
