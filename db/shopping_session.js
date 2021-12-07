@@ -1,5 +1,4 @@
 const client = require("./client");
-const { storeSessionId } = require('../auth')
 
 const createShoppingSession = async (user_id) => {
   // this function should be called when there is no shopping session stored in the local storage, and a user adds an item to the cart
@@ -15,7 +14,6 @@ const createShoppingSession = async (user_id) => {
         `,
       [user_id]
     );
-    storeSessionId(session.id);
     return session.id;
   } catch (err) {
     throw err;

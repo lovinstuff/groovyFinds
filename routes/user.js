@@ -39,6 +39,18 @@ usersRouter.get("/whoAmI", (req, res) => {
   }
 });
 
+// usersRouter.get('/:username', (req, res) => {
+//   if (req.body.username) {
+//     const user = await getUserByUsername({ username, password });
+//     console.log("routes/user", user)
+//     res.send(user)
+//   } else {
+//     res.status(401).send({
+//       message: "User by this username does not exist.",
+//     });
+//   }
+// })
+
 usersRouter.get("/admin", (req, res) => {
   const user = verifyJWT(req.headers.authorization);
 

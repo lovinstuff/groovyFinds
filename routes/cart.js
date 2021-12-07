@@ -24,10 +24,10 @@ cartRouter.get("/:userId", async (req, res, next) => {
   }
 });
 
-cartRouter.patch('/newsession', async (req, res, next) => {
+cartRouter.post('/newsession', async (req, res, next) => {
   try {
-    const newSession = await createShoppingSession(req.body.user_id ? req.body.user_id : null)
-    res.send(newSession.id)
+    const newSession = await createShoppingSession(req.body.userId ? req.body.userId : null)
+    res.send({newSession})
   } catch (err) {
     next(err);
   }

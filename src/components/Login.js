@@ -23,13 +23,11 @@ export default function Login(props) {
       className="login"
       onSubmit={async (event) => {
         event.preventDefault();
-        console.log ("Hello");
         try {
           let submit = await loginUser(userName, password);
 
           storeToken(submit.token);
-          
-          storeUserID(submit.id);
+          storeUserID(submit.user.id);
         } catch (error) {
           console.error(error);
         }

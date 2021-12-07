@@ -7,7 +7,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-import { createNewSession } from '../api';
+import { createNewSession, getCurrentUser } from '../api';
 
 import Login from './Login'
 import Register from './Register'
@@ -18,7 +18,8 @@ import Products from './Product/Products'
 
 const {
   getSessionId, 
-  storeSessionId
+  storeSessionId, 
+  getUserID
 } = require('../auth')
 
 const App = () => {
@@ -28,7 +29,9 @@ const App = () => {
 
   async function createSession() {
     try {
-      const newSessionID = await createNewSession();
+      const currentUserID = getUserID();
+      const currentUser = await getCurrentUser(currentUserID);
+      const newSessionID = await createNewSession(currentUser.id);
       storeSessionId(newSessionID);
     } catch(err) {
       console.log(err);
