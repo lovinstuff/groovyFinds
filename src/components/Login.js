@@ -28,6 +28,7 @@ export default function Login(props) {
 
           storeToken(submit.token);
           storeUserID(submit.user.id);
+          history.push("/")
         } catch (error) {
           console.error(error);
         }
