@@ -146,6 +146,7 @@ export async function addItemToCart(product, token) {
   const albumId = product.id;
   const price = product.price;
   const image_url = product.image_url;
+  const name = product.name;
   const sessionId = getSessionId();
 
   if (getToken() !== token) {
@@ -154,9 +155,10 @@ export async function addItemToCart(product, token) {
     }
   }
   try {
-    const { data } = await axios.patch(`${BASE}api/cart`, {
+    const { data } = await axios.post(`${BASE}api/cart/newItem`, {
       sessionId,
       albumId,
+      name, 
       price,
       image_url, 
       quantity: 1
@@ -169,7 +171,7 @@ export async function addItemToCart(product, token) {
 
 export async function updateItemQuantity(cartItemID, quantity) {
   try {
-    const {data} = await axios.post(`${BASE}api/cart/${ cartItemID }`, {quantity});
+    const {data} = await axios.patch(`${BASE}api/cart/${ cartItemID }`, {quantity});
 
     return data;
   } catch(err){

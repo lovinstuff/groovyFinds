@@ -14,11 +14,15 @@ const Cart = ({setShoppingSession}) => {
   const token = getToken();
   useEffect(() => {
     let sum = 0;
-    cart.forEach((item) => sum += item.price * item.quantity)
+    if (!cart) {
+      sum = 0;
+    } else {
+      cart.forEach((item) => sum += item.price * item.quantity)
+    }
     setTotal(sum);
   })
 
-  if (!cart[0]) {
+  if (!cart || !cart[0]) {
     return (
       <div className="cartBox">
         <h3>You don't have anything added to cart!</h3>

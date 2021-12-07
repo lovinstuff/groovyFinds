@@ -15,11 +15,13 @@ const {
 
 cartRouter.get("/:userId", async (req, res, next) => {
   const userId = req.params.userId;
+  console.log("!!!!!!!!", userId)
   try {
     const cartItems = await getCartItemsByUser(userId);
 
     res.send(cartItems);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -27,11 +29,25 @@ cartRouter.get("/:userId", async (req, res, next) => {
 cartRouter.post('/newsession', async (req, res, next) => {
   try {
     const newSession = await createShoppingSession(req.body.userId ? req.body.userId : null)
+    console.log("is it going here")
     res.send({newSession})
   } catch (err) {
     next(err);
   }
 })
+
+cartRouter.post("/newItem", async (req, res, next) => {
+  console.log(req.body, "newItem routes cartRouter");
+  const { sessionId, albumId, name, price, image_url, quantity } = req.body;
+
+  try {
+    const newCartItem = await addToCart(sessionId, albumId, name, price, image_url, quantity);
+
+    res.send(newCartItem);
+  } catch (err) {
+    next(err);
+  }
+});
 
 cartRouter.post('/:shoppingSessionID', async (req, res, next) => {
   const shoppingSessionID = req.params.shoppingSessionID;
@@ -43,23 +59,12 @@ cartRouter.post('/:shoppingSessionID', async (req, res, next) => {
   }
 })
 
-cartRouter.patch("/", async (req, res, next) => {
-  const { sessionId, albumId, price, image_url, quantity } = req.body;
-
-  try {
-    const newCartItem = await addToCart(sessionId, albumId, price, quantity);
-
-    res.send(newCartItem);
-  } catch (err) {
-    next(err);
-  }
-});
-
-cartRouter.post("/:cartItemID", async (req, res, next) => {
+cartRouter.patch("/:cartItemID", async (req, res, next) => {
   const { quantity } = req.body;
   const cartItemID = req.params.cartItemID;
 
   try {
+
     const updatedCartItem = await changeItemQuantity(cartItemID, quantity);
 
     res.send(updatedCartItem);

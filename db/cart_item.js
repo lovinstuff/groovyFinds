@@ -26,8 +26,31 @@ const addToCart = async (
   }
 };
 
+const checkActiveSession = async (user_id) => {
+  try {
+    const {rows: [shoppingSession]} = await client.query(`
+      SELECT is_active FROM shopping_session
+      WHERE is_active=true AND user_id=$1;
+    `, [user_id]);
+    if (shoppingSession) {
+      return true;
+    }
+    const {rows: [newShoppingSession]} = await client.query(`
+      INSERT INTO shopping_session(user_id, created_at, is_active)
+      VALUES ($1, CURRENT_TIMESTAMP, $2)
+      RETURNING *;
+    `, [user_id, true]);
+
+    return newShoppingSession;
+  } catch (err) {
+    throw err;
+  }
+}
+
 const getCartItemsByUser = async (user_id) => {
   try {
+    await checkActiveSession(user_id);
+
     const { rows: cartItems } = await client.query(`
       SELECT * FROM cart_item
       JOIN shopping_session ON shopping_session.id=cart_item.session_id
@@ -78,5 +101,6 @@ module.exports = {
   addToCart,
   changeItemQuantity,
   deleteCartItem,
-  getCartItemsByUser
+  getCartItemsByUser, 
+  checkActiveSession
 };
