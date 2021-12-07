@@ -45,7 +45,7 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id), 
         created_at TIMESTAMP, 
-        is_active BOOLEAN NOT NULL
+        is_active BOOLEAN DEFAULT true
       );
 
       CREATE TABLE cart_item(

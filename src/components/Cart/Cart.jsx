@@ -13,17 +13,25 @@ const Cart = ({ setShoppingSession }) => {
   const [cart, setCart] = useState(cartItems);
   const [total, setTotal] = useState(0);
   const token = getToken();
-  // useEffect(() => {
-  //   let sum = 0;
-  //   cart.forEach((item) => (sum += item.price * item.quantity));
-  //   setTotal(sum);
-  // });
 
-  // if (!cart[0]) {
-  //   return (
+  useEffect(() => {
+    let sum = 0;
+    if (!cart) {
+      sum = 0;
+    } else {
+      cart.forEach((item) => sum += item.price * item.quantity)
+    }
+    setTotal(sum);
+  })
 
-  //   );
-  // }
+  if (!cart || !cart[0]) {
+    return (
+      <div className="cartBox">
+        <h3>You don't have anything added to cart!</h3>
+      </div>
+    );
+  }
+
 
   return (
     <div>
