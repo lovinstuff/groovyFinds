@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const {JWT_SECRET }= process.env;
 require('dotenv').config()
 const apiRouter = require('express').Router();
-const jwt = require('jsonwebtoken')
 
 apiRouter.get("/", (req, res, next) => {
   res.send({

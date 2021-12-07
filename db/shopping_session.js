@@ -1,53 +1,42 @@
 const client = require("./client");
-//const { getSessionId } = require('../auth')
+const { storeSessionId } = require('../auth')
 
-const createShoppingSession = async ({ user_id, total }) => {
+const createShoppingSession = async (user_id) => {
   // this function should be called when there is no shopping session stored in the local storage, and a user adds an item to the cart
   // returns the session id, so we can store it to the local storage
-  if (!user_id) {
-    user_id = null;
-  }
   try {
     const {
       rows: [session],
     } = await client.query(
       `
-            INSERT INTO shopping_session(user_id, total, created_at)
-            VALUES ($1, $2, CURRENT_TIMESTAMP)
+            INSERT INTO shopping_session(user_id, created_at)
+            VALUES ($1, CURRENT_TIMESTAMP)
             RETURNING *;
         `,
-      [user_id, total]
+      [user_id]
     );
-
+    storeSessionId(session.id);
     return session.id;
   } catch (err) {
     throw err;
   }
 };
 
-const updateShoppingSessionUser = async ({ id, user_id }) => {
-  // this function is to update the user id if the session was originally created by a not logged in user
-  // should call this function if there are things in the cart, and the user decides to log in.
+const updateShoppingSessionToFalse = async (id) => {
   try {
-    const {
-      rows: [updatedSession],
-    } = await client.query(
-      `
-        UPDATE shopping_session
-        SET user_id = $1
-        WHERE id=$2
-        RETURNING *;
-    `,
-      [user_id, id]
-    );
-
-    return updatedSession;
+    const {rows: [updatedShoppingSession]} = await client.query(`
+      UPDATE shopping_session
+      SET is_active=false
+      WHERE id=$1
+      RETURNING *;
+    `, [id])
+    return updatedShoppingSession;
   } catch (err) {
     throw err;
   }
-};
+}
 
 module.exports = {
-  createShoppingSession,
-  updateShoppingSessionUser 
+  createShoppingSession, 
+  updateShoppingSessionToFalse
 };

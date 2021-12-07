@@ -7,6 +7,8 @@ import {
   Redirect
 } from "react-router-dom";
 
+import { createNewSession } from '../api';
+
 import Login from './Login'
 import Register from './Register'
 import Cart from './Cart/Cart'
@@ -15,17 +17,28 @@ import Products from './Product/Products'
 
 
 const {
+  getSessionId, 
   storeSessionId
-} = require('../auth/index')
+} = require('../auth')
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [cart, setCart] = useState([]);
-  const [shoppingSession, setShoppingSession] = useState(0);
+
+  async function createSession() {
+    try {
+      const newSessionID = await createNewSession();
+      storeSessionId(newSessionID);
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    storeSessionId(shoppingSession)
+    if (!getSessionId() && getSessionId() !== 0) {
+      createSession();
+    } 
   })
 
   return (
@@ -47,13 +60,15 @@ const App = () => {
           <Register setIsLoggedIn={setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
-          <Cart setShoppingSession={ setShoppingSession }/>
+          <Cart 
+            cart={cart} 
+            setCart={setCart}
+          />
         </Route>
         <Route exact path='/'>
           <Products cart={ cart } setCart={ setCart }/>
           <h1>Find your Groovy finds here!</h1>
         </Route>
-        {/* can create another route in here for your component */}
       </Switch>
     </div>
   );

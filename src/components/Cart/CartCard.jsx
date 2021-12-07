@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import {
+  updateItemQuantity,
+  deleteCartItem,
+} from "../../api"
 
 const CartCard = ({
   id,
@@ -6,18 +10,24 @@ const CartCard = ({
   quantity,
   price,
   image_url,
-  total,
-  setTotal,
+  cart,
+  setCart
 }) => {
   const [newQuantity, setNewQuantity] = useState(quantity);
-  const deleteItem = () => {
+  const deleteItem = async () => {
     const cartString = localStorage.getItem("Cart");
-    const cart = JSON.parse(cartString);
-    const deletedItem = cart.find((item) => item.id === id)
-    const index = cart.indexOf(deletedItem)
-    cart.splice(index, 1)
+    const cartItems = JSON.parse(cartString);
+    const deletedItem = cartItems.find((item) => item.id === id)
+    const index = cartItems.indexOf(deletedItem)
+    cartItems.splice(index, 1)
     localStorage.removeItem("Cart");
-    localStorage.setItem("Cart", JSON.stringify(cart));
+    localStorage.setItem("Cart", JSON.stringify(cartItems));
+    setCart(cartItems);
+    try {
+      await deleteCartItem(id)
+    } catch(err) {
+      console.log(err);
+    }
   }
   return (
     <div className="cartItem">
@@ -32,8 +42,21 @@ const CartCard = ({
           name="cartItemQuantity"
           id="cars"
           value={newQuantity}
-          onChange={(e) => {
-            setNewQuantity(e.target.value);
+          onChange={async (e) => {
+            setNewQuantity(e.target.value)
+            const cartString = localStorage.getItem("Cart")
+            const cartItems = JSON.parse(cartString)
+            const itemToUpdate = cartItems.find((item) => item.id === id)
+            const index = cartItems.indexOf(itemToUpdate)
+            cartItems[index].quantity = parseInt(e.target.value);
+            localStorage.removeItem("Cart");
+            localStorage.setItem("Cart", JSON.stringify(cartItems))
+            setCart(cartItems);
+            try {
+              await updateItemQuantity(id, parseInt(e.target.value))
+            } catch (err) {
+              console.log(err);
+            }
           }}
         >
           <option value="1">1</option>

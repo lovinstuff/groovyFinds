@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { clearSessionId } from "../../auth";
 
 const Checkout = () => {
   const [streetAddress, setStreetAddress] = useState("");
@@ -15,7 +16,8 @@ const Checkout = () => {
       <form 
         className="addressForm" 
         onSubmit={(e) => {
-            e.preventDefault()
+            e.preventDefault();
+            clearSessionId();
             alert('Your purchase was successful!')
         }}
       >

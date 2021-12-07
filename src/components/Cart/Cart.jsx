@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-import {
-  getCurrentSessionCartItems,
-  updateItemQuantity,
-  deleteCartItem,
-} from "../../api"
+import { getToken } from "../../auth";
 import CartCard from "./CartCard";
 import Checkout from "./Checkout";
 import "./Cart.css";
 
-const Cart = () => {
-
-  // useEffect(() => {
-  //   const cartString = localStorage.getItem('Cart')
-  //   setCart(JSON.parse(cartString))
-  // })
+const Cart = ({setShoppingSession}) => {
   const [checkout, setCheckout] = useState(false);
 
   const cartString = localStorage.getItem("Cart");
-  const cart = JSON.parse(cartString);
+  const cartItems = JSON.parse(cartString);
+  const [cart, setCart] = useState(cartItems);
+  const [total, setTotal] = useState(0);
+  const token = getToken();
+  useEffect(() => {
+    let sum = 0;
+    cart.forEach((item) => sum += item.price * item.quantity)
+    setTotal(sum);
+  })
 
-  let sum = 0;
-  cart.forEach((item) => sum += item.price * item.quantity)
-
-  const [total, setTotal] = useState(sum);
-  if (cart === []) {
+  if (!cart[0]) {
     return (
       <div className="cartBox">
         <h3>You don't have anything added to cart!</h3>
@@ -34,10 +29,10 @@ const Cart = () => {
   return (
     <div className="cartBox">
       <div className="total">
-        <h3>Total: {total}</h3>
+        <h3>Total: ${total}</h3>
       </div>
       <div className="cartItems">
-        {cart.map((item) => {
+        {cartItems.map((item) => {
           return (
             <CartCard
               id={item.id}
@@ -45,8 +40,8 @@ const Cart = () => {
               quantity={item.quantity}
               price={item.price}
               image_url={item.image_url}
-              total={total}
-              setTotal={setTotal}
+              cart={cart}
+              setCart={setCart}
             />
           );
         })}
@@ -55,7 +50,8 @@ const Cart = () => {
         className="checkoutBtn" 
         onClick={(e) => {
           e.preventDefault()
-          setCheckout(true);
+          if (token) setCheckout(true)
+          else alert('You must be logged in to checkout!')
         }}
       >
         Checkout
