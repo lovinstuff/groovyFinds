@@ -11,7 +11,7 @@ const {
   getUserById,
   updateUser,
   deleteUser,
-} = require("../db/users.js");
+} = require("../db");
 
 usersRouter.get("/", async (req, res) => {
   const user = verifyJWT(req.headers.authorization);
