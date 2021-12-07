@@ -30,6 +30,7 @@ function storeUserID(userId) {
 
 function getUserID() {
   const userID = JSON.parse(localStorage.getItem("UserID"))
+  // console.log(userID);
   return userID
 }
 

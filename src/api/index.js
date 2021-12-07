@@ -14,13 +14,11 @@ export async function getProducts() {
 export async function getAllUsers() {
   try { 
     const token = getToken()
-    console.log("users", token);
     const { data } = await axios.get(`${BASE}api/Admin`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data, "Hello");
     
     return data;
   } catch (error) {
@@ -75,6 +73,15 @@ export async function updateProduct(product_id, fields, token) {
   }
 }
 
+export async function getCurrentUser(id) {
+  try {
+    const {data} = await axios.get(`${BASE}api/users/${id}`)
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // REGISTER A USER
 
 export async function registerUser(username, password) {
@@ -100,7 +107,6 @@ export async function loginUser(username, password) {
         username,
         password,
       })
-      console.log(data)
     return data;
   } catch (error) {
     console.log(error);
@@ -116,10 +122,12 @@ export async function logOut() {
 
 // cart functions
 
-export async function createNewSession() {
+export async function createNewSession(userId) {
   try {
-    const {data} = await axios.patch(`${BASE}api/cart/newsession`)
-    return data;
+    const {data} = await axios.post(`${BASE}api/cart/newsession`, {
+      userId, 
+    })
+    return data.newSession;
   } catch (err) {
     console.log(err)
   }
