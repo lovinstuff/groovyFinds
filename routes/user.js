@@ -156,6 +156,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 
   const { username, password } = req.body;
+  console.log(username, password, "USERNAME/PASSWORD!!!!")
 
   if (!username || !password || password.length < 5) {
     next({
@@ -164,9 +165,10 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
 
-  try {
+  try { 
+    console.log("HELLO!!!!!")
     const user = await getUserByUsername({ username, password });
-
+    console.log(user, "USER!!!!!")
     if (!user) {
       next({
         name: "IncorrectCredentialsError",
