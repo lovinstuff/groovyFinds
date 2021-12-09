@@ -21,6 +21,15 @@ async function buildTables() {
 
     // build tables in correct order
     await client.query(`
+
+    CREATE TABLE users(
+      id SERIAL PRIMARY KEY,
+      username varchar(255) UNIQUE NOT NULL,
+      password varchar(255) NOT NULL,
+      email varchar(255) UNIQUE NOT NULL,
+      isadmin BOOLEAN DEFAULT false
+    );
+
       CREATE TABLE products(
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
@@ -33,13 +42,7 @@ async function buildTables() {
         active BOOLEAN DEFAULT true
       );
 
-      CREATE TABLE users(
-        id SERIAL PRIMARY KEY,
-        username varchar(255) UNIQUE NOT NULL,
-        password varchar(255) NOT NULL,
-        email varchar(255) UNIQUE NOT NULL,
-        isadmin BOOLEAN DEFAULT false
-      );
+ 
 
       CREATE TABLE shopping_session(
         id SERIAL PRIMARY KEY,

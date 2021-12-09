@@ -115,7 +115,7 @@ const getUserById = async (id) => {
 const getUserByEmail = async (email) => {
   try {
     const {
-      rows: [user],
+      rows,
     } = await client.query(
       `
         SELECT id, username, email, isadmin
@@ -125,10 +125,8 @@ const getUserByEmail = async (email) => {
       [email]
     );
 
-    if (!user) {
-      return false;
-    }
-
+    if (!rows || !rows.length) return null;
+    const [user] = rows;
     return user;
   } catch (error) {
     throw error;
