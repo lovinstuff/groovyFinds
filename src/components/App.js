@@ -31,8 +31,11 @@ const App = () => {
     try {
       const currentUserID = getUserID();
       const currentUser = await getCurrentUser(currentUserID);
-      const newSessionID = await createNewSession(currentUser.id);
-      storeSessionId(newSessionID);
+      if (currentUser) {
+        const newSessionID = await createNewSession(currentUser.id);
+        storeSessionId(newSessionID)
+      }
+     
     } catch(err) {
       console.log(err);
     }
