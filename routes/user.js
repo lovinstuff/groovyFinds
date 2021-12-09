@@ -85,12 +85,12 @@ usersRouter.get("/:id", async (req, res) => {
 });
 
 usersRouter.post("/register", async (req, res, next) => {
-  if (Object.keys(req.body).length < 3) {
-    return res.status(400).send({
-      name: "CredentialsRequired",
-      message: "Please provide email, username and password to register.",
-    });
-  }
+  // if (Object.keys(req.body).length < 3) {
+  //   return res.status(400).send({
+  //     name: "CredentialsRequired",
+  //     message: "Please provide email, username and password to register.",
+  //   });
+  // }
 
   const { username, password, email, admin } = req.body;
 
