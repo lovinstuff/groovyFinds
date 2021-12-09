@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getToken, getSessionId } from '../auth';
-const BASE = `http://groovyfinds.herokuapp.com/`
+const BASE = `https://groovyfinds.herokuapp.com/`
 // const BASE = "http://localhost:5000/"
 
 export async function getProducts() {
