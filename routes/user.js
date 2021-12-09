@@ -95,12 +95,12 @@ usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email, admin } = req.body;
 
   let currentAdminStatus;
-  console.log("backend 98");
+
   try {
     const existingUserByEmail = await getUserByEmail(email);
-    console.log(existingUserByEmail, "EMAIL!");
+
     const existingUserUsername = await getUserByUsername(username);
-    console.log(existingUserUsername, "USERNAME!");
+
     if (existingUserByEmail) {
       res.status(401);
       next({
@@ -132,13 +132,12 @@ usersRouter.post("/register", async (req, res, next) => {
     if (!user) {
       next({ name: "user creation error", message: "registering failed" });
     } else {
-      console.log(user, "USER!");
       const token = jwt.sign(
         { id: user.id, username: user.username },
         process.env.JWT_SECRET,
         { expiresIn: "1w" }
       );
-      console.log(token, "TOKEN!");
+
       res.send({
         user: { id: user.id, username: user.username },
         message: "Thank you for signing up",
@@ -147,7 +146,7 @@ usersRouter.post("/register", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -169,7 +168,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 
   try {
-    s;
+    
     const user = await getUserByUsername({ username, password });
 
     if (!user) {
@@ -192,7 +191,7 @@ usersRouter.post("/login", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 

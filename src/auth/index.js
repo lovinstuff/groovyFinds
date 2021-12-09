@@ -25,13 +25,13 @@ function clearToken() {
 }
 
 function storeUserID(userId) {
-  localStorage.setItem("UserID", JSON.stringify(userId))
+  localStorage.setItem("UserID", JSON.stringify(userId));
 }
 
 function getUserID() {
-  const userID = JSON.parse(localStorage.getItem("UserID"))
-  // console.log(userID);
-  return userID
+  const userID = JSON.parse(localStorage.getItem("UserID"));
+
+  return userID;
 }
 
 function clearUserID() {
@@ -48,14 +48,14 @@ const clearAdmin = () => {
 
 module.exports = {
   storeSessionId,
-  getSessionId, 
-  clearSessionId, 
-  storeToken, 
-  getToken, 
+  getSessionId,
+  clearSessionId,
+  storeToken,
+  getToken,
   clearToken,
-  storeUserID, 
-  getUserID, 
-  clearUserID,  
-  loggedAdmin, 
-  clearAdmin
-}
+  storeUserID,
+  getUserID,
+  clearUserID,
+  loggedAdmin,
+  clearAdmin,
+};

@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { getToken, getSessionId } from '../auth';
-const BASE = `https://groovyfinds.herokuapp.com/`
+import axios from "axios";
+import { getToken, getSessionId } from "../auth";
+const BASE = `https://groovyfinds.herokuapp.com/`;
 // const BASE = "http://localhost:5000/"
 
 export async function getProducts() {
@@ -13,14 +13,14 @@ export async function getProducts() {
 }
 
 export async function getAllUsers() {
-  try { 
-    const token = getToken()
+  try {
+    const token = getToken();
     const { data } = await axios.get(`${BASE}api/Admin`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     return data;
   } catch (error) {
     throw error;
@@ -76,7 +76,7 @@ export async function updateProduct(product_id, fields, token) {
 
 export async function getCurrentUser(id) {
   try {
-    const {data} = await axios.get(`${BASE}api/users/${id}`)
+    const { data } = await axios.get(`${BASE}api/users/${id}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -87,13 +87,12 @@ export async function getCurrentUser(id) {
 
 export async function registerUser(username, password, email) {
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/register`, {
-        username,
-        password,
-        email
-      })
-      console.log(data, "DATA")
+    const { data } = await axios.post(`${BASE}api/users/register`, {
+      username,
+      password,
+      email,
+    });
+
     return data;
   } catch (error) {
     throw error;
@@ -104,11 +103,10 @@ export async function registerUser(username, password, email) {
 
 export async function loginUser(username, password) {
   try {
-    const {data} = await axios
-      .post(`${BASE}api/users/login`, {
-        username,
-        password,
-      })
+    const { data } = await axios.post(`${BASE}api/users/login`, {
+      username,
+      password,
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -126,21 +124,21 @@ export async function logOut() {
 
 export async function createNewSession(userId) {
   try {
-    const {data} = await axios.post(`${BASE}api/cart/newsession`, {
-      userId, 
-    })
+    const { data } = await axios.post(`${BASE}api/cart/newsession`, {
+      userId,
+    });
     return data.newSession;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
 export async function getCartItemsByUser(userId) {
   try {
-    const {data} = await axios.get(`${BASE}api/cart/${userId}`)
+    const { data } = await axios.get(`${BASE}api/cart/${userId}`);
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
@@ -153,17 +151,17 @@ export async function addItemToCart(product, token) {
 
   if (getToken() !== token) {
     return {
-      message: 'You do not have authority to add to this cart!'
-    }
+      message: "You do not have authority to add to this cart!",
+    };
   }
   try {
     const { data } = await axios.post(`${BASE}api/cart/newItem`, {
       sessionId,
       albumId,
-      name, 
+      name,
       price,
-      image_url, 
-      quantity: 1
+      image_url,
+      quantity: 1,
     });
     return data;
   } catch (err) {
@@ -173,19 +171,21 @@ export async function addItemToCart(product, token) {
 
 export async function updateItemQuantity(cartItemID, quantity) {
   try {
-    const {data} = await axios.patch(`${BASE}api/cart/${ cartItemID }`, {quantity});
+    const { data } = await axios.patch(`${BASE}api/cart/${cartItemID}`, {
+      quantity,
+    });
 
     return data;
-  } catch(err){
+  } catch (err) {
     console.log(err);
   }
 }
 
 export async function deleteCartItem(cartItemID) {
   try {
-    const {data} = await axios.delete(`${BASE}api/cart/${ cartItemID }`)
+    const { data } = await axios.delete(`${BASE}api/cart/${cartItemID}`);
     return data;
-  } catch(err){
+  } catch (err) {
     console.log(err);
   }
 }

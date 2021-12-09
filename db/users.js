@@ -20,7 +20,7 @@ const createUser = async ({ username, password, email, isAdmin }) => {
       `,
       [username, hashedPassword, email, isAdmin]
     );
-      console.log(user, "User")
+
     return user;
   } catch (error) {
     throw error;
@@ -114,9 +114,7 @@ const getUserById = async (id) => {
 
 const getUserByEmail = async (email) => {
   try {
-    const {
-      rows,
-    } = await client.query(
+    const { rows } = await client.query(
       `
         SELECT id, username, email, isadmin
         FROM users
