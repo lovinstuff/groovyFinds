@@ -62,7 +62,7 @@ const App = () => {
             isLoggedIn={isLoggedIn}
           />
         </Route>
-        <Route path="/Register">
+        <Route path="/signUp">
           <Register setIsLoggedIn={setIsLoggedIn} />
         </Route>
         <Route path='/Cart'>
