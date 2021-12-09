@@ -102,13 +102,13 @@ usersRouter.post("/register", async (req, res, next) => {
     const existingUserUsername = await getUserByUsername(username);
     console.log(existingUserUsername, "USERNAME!");
     if (existingUserByEmail) {
+      res.status(401);
       next({
         name: "EmailExistsError",
         message: "A user under that email already exists.",
       });
-    }
-
-    if (existingUserUsername) {
+    } else if (existingUserUsername) {
+      res.status(401);
       next({
         name: "UserExistsError",
         message: "A user under that username already exists.",
@@ -127,20 +127,24 @@ usersRouter.post("/register", async (req, res, next) => {
       username,
       password,
       email,
-      currentAdminStatus,
+      isAdmin: currentAdminStatus,
     });
-    console.log(user, "USER!");
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: "1w" }
-    );
-    console.log(token, "TOKEN!");
-    res.send({
-      user: { id: user.id, username: user.username },
-      message: "Thank you for signing up",
-      token,
-    });
+    if (!user) {
+      next({ name: "user creation error", message: "registering failed" });
+    } else {
+      console.log(user, "USER!");
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "1w" }
+      );
+      console.log(token, "TOKEN!");
+      res.send({
+        user: { id: user.id, username: user.username },
+        message: "Thank you for signing up",
+        token,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
