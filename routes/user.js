@@ -95,11 +95,12 @@ usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email, admin } = req.body;
 
   let currentAdminStatus;
-
+console.log("backend 98")
   try {
     const existingUserByEmail = await getUserByEmail(email);
+    console.log(existingUserByEmail, "EMAIL!")
     const existingUserUsername = await getUserByUsername(username);
-
+    console.log(existingUserUsername, "USERNAME!")
     if (existingUserByEmail) {
       return res.status(400).send({
         name: "EmailExistsError",
@@ -130,13 +131,13 @@ usersRouter.post("/register", async (req, res, next) => {
       email,
       currentAdminStatus,
     });
-
+    console.log(user, "USER!")
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: "1w" }
     );
-
+      console.log(token, "TOKEN!")
     res.send({
       user: { id: user.id, username: user.username },
       message: "Thank you for signing up",
