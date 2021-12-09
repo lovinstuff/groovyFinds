@@ -15,7 +15,7 @@ const {
 
 cartRouter.get("/:userId", async (req, res, next) => {
   const userId = req.params.userId;
-  console.log("!!!!!!!!", userId)
+
   try {
     const cartItems = await getCartItemsByUser(userId);
 
@@ -26,22 +26,30 @@ cartRouter.get("/:userId", async (req, res, next) => {
   }
 });
 
-cartRouter.post('/newsession', async (req, res, next) => {
+cartRouter.post("/newsession", async (req, res, next) => {
   try {
-    const newSession = await createShoppingSession(req.body.userId ? req.body.userId : null)
-    console.log("is it going here")
-    res.send({newSession})
+    const newSession = await createShoppingSession(
+      req.body.userId ? req.body.userId : null
+    );
+
+    res.send({ newSession });
   } catch (err) {
     next(err);
   }
-})
+});
 
 cartRouter.post("/newItem", async (req, res, next) => {
-  console.log(req.body, "newItem routes cartRouter");
   const { sessionId, albumId, name, price, image_url, quantity } = req.body;
 
   try {
-    const newCartItem = await addToCart(sessionId, albumId, name, price, image_url, quantity);
+    const newCartItem = await addToCart(
+      sessionId,
+      albumId,
+      name,
+      price,
+      image_url,
+      quantity
+    );
 
     res.send(newCartItem);
   } catch (err) {
@@ -49,22 +57,23 @@ cartRouter.post("/newItem", async (req, res, next) => {
   }
 });
 
-cartRouter.post('/:shoppingSessionID', async (req, res, next) => {
+cartRouter.post("/:shoppingSessionID", async (req, res, next) => {
   const shoppingSessionID = req.params.shoppingSessionID;
   try {
-    const updatedSession = await updateShoppingSessionToFalse(shoppingSessionID)
-    res.send(updatedSession)
-  } catch(err) {
+    const updatedSession = await updateShoppingSessionToFalse(
+      shoppingSessionID
+    );
+    res.send(updatedSession);
+  } catch (err) {
     next(err);
   }
-})
+});
 
 cartRouter.patch("/:cartItemID", async (req, res, next) => {
   const { quantity } = req.body;
   const cartItemID = req.params.cartItemID;
 
   try {
-
     const updatedCartItem = await changeItemQuantity(cartItemID, quantity);
 
     res.send(updatedCartItem);

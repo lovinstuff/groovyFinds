@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { registerUser } from "../api";
-import { storeToken } from "../auth";
+import { storeToken, getToken, storeUsername, storeUserID } from "../auth";
 
 export default function Register({ setIsLoggedIn }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  // const history = useHistory();
+  const history = useHistory();
 
   return (
     <form
@@ -17,7 +17,11 @@ export default function Register({ setIsLoggedIn }) {
         try {
           let submit = await registerUser(userName, password, email);
 
-          storeToken(submit.token);
+          if (submit) {
+            storeToken(submit.token);
+            storeUserID(submit.user.id);
+            history.push("/");
+          }
         } catch (error) {
           console.error(error);
         }

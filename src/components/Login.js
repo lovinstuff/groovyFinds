@@ -25,10 +25,12 @@ export default function Login(props) {
         event.preventDefault();
         try {
           let submit = await loginUser(userName, password);
+          if (submit) {
 
-          storeToken(submit.token);
-          storeUserID(submit.user.id);
-          history.push("/")
+            storeToken(submit.token);
+            storeUserID(submit.user.id);
+            history.push("/")
+          }
         } catch (error) {
           console.error(error);
         }

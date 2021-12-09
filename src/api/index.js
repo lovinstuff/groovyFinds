@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getToken, getSessionId } from '../auth';
 const BASE = `https://groovyfinds.herokuapp.com/`
+// const BASE = "http://localhost:5000/"
 
 export async function getProducts() {
   try {
@@ -84,12 +85,13 @@ export async function getCurrentUser(id) {
 
 // REGISTER A USER
 
-export async function registerUser(username, password) {
+export async function registerUser(username, password, email) {
   try {
     const {data} = await axios
       .post(`${BASE}api/users/register`, {
         username,
         password,
+        email
       })
       
     return data;

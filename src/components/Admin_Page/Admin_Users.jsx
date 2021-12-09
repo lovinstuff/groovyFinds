@@ -6,7 +6,6 @@ export default function AdminUsers() {
 
   const fetchAllUsers = async () => {
     const allUsers = await getAllUsers();
-    console.log ("Hello", allUsers);
 
     setUsers(allUsers);
   };
@@ -20,7 +19,6 @@ export default function AdminUsers() {
       <ul>
         {users && users.length
           ? users.map((user) => {
-            console.log(user);
               const {
                 id,
                 username,
@@ -30,7 +28,7 @@ export default function AdminUsers() {
                 address,
                 admin,
               } = user;
-          
+
               return (
                 <div key={user.id}>
                   <h2>{username}</h2>

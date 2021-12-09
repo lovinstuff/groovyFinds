@@ -8,7 +8,7 @@ const Cart = ({ setShoppingSession }) => {
   const [checkout, setCheckout] = useState(false);
 
   const cartString = localStorage.getItem("Cart");
-  console.log(cartString, "STRING!!!");
+
   const cartItems = JSON.parse(cartString);
   const [cart, setCart] = useState(cartItems);
   const [total, setTotal] = useState(0);
@@ -19,10 +19,10 @@ const Cart = ({ setShoppingSession }) => {
     if (!cart) {
       sum = 0;
     } else {
-      cart.forEach((item) => sum += item.price * item.quantity)
+      cart.forEach((item) => (sum += item.price * item.quantity));
     }
     setTotal(sum);
-  })
+  });
 
   if (!cart || !cart[0]) {
     return (
@@ -31,7 +31,6 @@ const Cart = ({ setShoppingSession }) => {
       </div>
     );
   }
-
 
   return (
     <div>

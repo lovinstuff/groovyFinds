@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from "react";
 import AdminUsers from "./Admin_Page/Admin_Users";
 
-import {
-  Route, 
-  Switch, 
-  Redirect
-} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import { createNewSession, getCurrentUser } from '../api';
+import { createNewSession, getCurrentUser } from "../api";
 
-import Login from './Login'
-import Register from './Register'
-import Cart from './Cart/Cart'
-import NavBar from './NavBar'
-import Products from './Product/Products'
+import Login from "./Login";
+import Register from "./Register";
+import Cart from "./Cart/Cart";
+import NavBar from "./NavBar";
+import Products from "./Product/Products";
 
-
-const {
-  getSessionId, 
-  storeSessionId, 
-  getUserID
-} = require('../auth')
+const { getSessionId, storeSessionId, getUserID } = require("../auth");
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,13 +21,14 @@ const App = () => {
   async function createSession() {
     try {
       const currentUserID = getUserID();
-      const currentUser = await getCurrentUser(currentUserID);
-      if (currentUser) {
-        const newSessionID = await createNewSession(currentUser.id);
-        storeSessionId(newSessionID)
+      if (currentUserID) {
+        const currentUser = await getCurrentUser(currentUserID);
+        if (currentUser) {
+          const newSessionID = await createNewSession(currentUser.id);
+          storeSessionId(newSessionID);
+        }
       }
-     
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -44,8 +36,8 @@ const App = () => {
   useEffect(() => {
     if (!getSessionId() && getSessionId() !== 0) {
       createSession();
-    } 
-  })
+    }
+  });
 
   return (
     <div className="App">
@@ -65,14 +57,11 @@ const App = () => {
         <Route path="/signUp">
           <Register setIsLoggedIn={setIsLoggedIn} />
         </Route>
-        <Route path='/Cart'>
-          <Cart 
-            cart={cart} 
-            setCart={setCart}
-          />
+        <Route path="/Cart">
+          <Cart cart={cart} setCart={setCart} />
         </Route>
-        <Route exact path='/'>
-          <Products cart={ cart } setCart={ setCart }/>
+        <Route exact path="/">
+          <Products cart={cart} setCart={setCart} />
           <h1>Find your Groovy finds here!</h1>
         </Route>
       </Switch>
