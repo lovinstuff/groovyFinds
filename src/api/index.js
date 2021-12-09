@@ -93,7 +93,7 @@ export async function registerUser(username, password, email) {
         password,
         email
       })
-      
+      console.log(data, "DATA")
     return data;
   } catch (error) {
     throw error;

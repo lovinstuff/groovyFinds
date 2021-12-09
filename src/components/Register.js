@@ -16,10 +16,13 @@ export default function Register({ setIsLoggedIn }) {
         event.preventDefault();
         try {
           let submit = await registerUser(userName, password, email);
-
+          console.log(submit, "submit")
           if (submit) {
+            console.log("21")
             storeToken(submit.token);
+            console.log("23")
             storeUserID(submit.user.id);
+            console.log("25")
             history.push("/");
           }
         } catch (error) {
