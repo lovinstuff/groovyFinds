@@ -147,16 +147,17 @@ usersRouter.post("/register", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
+    next(error)
   }
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-  if (Object.keys(req.body).length < 2) {
-    next({
-      name: "CredentialsRequired",
-      message: "Please provide email and password to login.",
-    });
-  }
+  // if (Object.keys(req.body).length < 2) {
+  //   next({
+  //     name: "CredentialsRequired",
+  //     message: "Please provide email and password to login.",
+  //   });
+  // }
 
   const { username, password } = req.body;
 
@@ -191,6 +192,7 @@ usersRouter.post("/login", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
+    next(error)
   }
 });
 
